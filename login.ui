@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>login</class>
+ <widget class="QDialog" name="login">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>430</width>
+    <height>520</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Login</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog#login {
+	background-color: #F9F9F9;
+	border-radius: 10px;
+}
+
+QPushButton#button_close,
+QPushButton#button_min {
+	border: none;
+	background-color: transparent;
+	color: #666666;
+	font-size: 22px;
+}
+
+QPushButton#button_close:hover,
+QPushButton#button_min:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+QPushButton#button_close:pressed,
+QPushButton#button_min:pressed {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+#username,
+#password {
+	border: none;
+	border-bottom: 2px solid #999999;
+	background-color: transparent;
+	font-size: 18px;
+	color: #333333;
+}
+
+#username:hover,
+#password:hover {
+	border-bottom: 2px solid #3EB1E8;
+}
+
+#username:focus,
+#password:focus {
+	border-bottom: 2px solid #5EBD3E;
+}
+
+QPushButton#button_login {
+	background-color: #5EBD3E;
+	color: #FFFFFF;
+	border-radius: 20px;
+	padding: 10px 30px;
+	border: none;
+	font-size: 20px;
+	margin-top: 20px;
+}
+
+QPushButton#button_login:hover {
+	background-color: #3EB1E8;
+}
+
+QPushButton#button_login:pressed {
+	background-color: #FFFFFF;
+	color: #5EBD3E;
+}
+
+#remember_password,
+#auto_login,
+#get_back_password {
+	border: none;
+	color: rgba(1, 11, 20, 0.808);
+	background-color: transparent;
+}
+
+QCheckBox::indicator {
+	width: 15px;
+	height: 15px;
+}
+
+QCheckBox::indicator:unchecked {
+	border: 2px solid #A9A9A9;
+	border-radius: 3px;
+}
+
+QCheckBox::indicator:unchecked:hover {
+	border: 2px solid #3EB1E8;
+}
+
+QCheckBox::indicator:checked {
+	background-color: #3EB1E8;
+	border-radius: 3px;
+	border: none;
+}
+
+QCheckBox::indicator:checked:hover {
+	background-color: #5EBD3E;
+}
+
+QCheckBox::indicator:indeterminate {
+	border: 2px solid #A9A9A9;
+	background-color: #A9A9A9;
+	border-radius: 3px;
+}
+
+QCheckBox::indicator:indeterminate:hover {
+	background-color: #3EB1E8;
+}
+
+
+
+
+QMessageBox {
+    background-color: #F5F5F5;
+    border: 2px solid #333333;
+    font-size: 14px;
+}
+
+QMessageBox QLabel {
+    color: #333333;
+}
+
+QMessageBox QPushButton {
+    background-color: #333333;
+    color: #F5F5F5;
+    padding: 5px;
+    border-radius: 3px;
+    min-width: 80px;
+}
+
+QMessageBox QPushButton:hover {
+    background-color: #666666;
+}
+</string>
+  </property>
+  <widget class="QLabel" name="bg">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>430</width>
+     <height>180</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/images/QQ/back.gif);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="button_close">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>0</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="button_min">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>0</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="autoRepeat">
+    <bool>false</bool>
+   </property>
+   <property name="autoDefault">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="button_login">
+   <property name="geometry">
+    <rect>
+     <x>95</x>
+     <y>410</y>
+     <width>240</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>安全登录</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="username">
+   <property name="geometry">
+    <rect>
+     <x>95</x>
+     <y>230</y>
+     <width>240</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="editable">
+    <bool>true</bool>
+   </property>
+   <property name="currentText">
+    <string/>
+   </property>
+   <property name="currentIndex">
+    <number>-1</number>
+   </property>
+   <property name="placeholderText">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="password">
+   <property name="geometry">
+    <rect>
+     <x>95</x>
+     <y>300</y>
+     <width>240</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>360</y>
+     <width>292</width>
+     <height>43</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QCheckBox" name="auto_login">
+      <property name="text">
+       <string>自动登陆</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="remember_password">
+      <property name="text">
+       <string>记住密码</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="get_back_password">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>找回密码</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
+ <connections/>
+</ui>

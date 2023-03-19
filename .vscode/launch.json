@@ -1,0 +1,87 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Test7",
+            "request": "launch",
+            "mainClass": "cslg.day_4.Test7",
+            "projectName": "yuri_5d503d4e"
+        },
+        {
+            "type": "java",
+            "name": "test",
+            "request": "launch",
+            "mainClass": "cslg.day_3.test",
+            "projectName": "yuri_5d503d4e"
+        },
+        {
+            "type": "java",
+            "name": "test7",
+            "request": "launch",
+            "mainClass": "cslg.day_3.test7",
+            "projectName": "yuri_5d503d4e"
+        },
+        {
+            "type": "java",
+            "name": "Ex4",
+            "request": "launch",
+            "mainClass": "cslg.day_3.Ex4",
+            "projectName": "yuri_5d503d4e"
+        },
+        {
+            "type": "java",
+            "name": "test6",
+            "request": "launch",
+            "mainClass": "cslg.day_3.test6",
+            "projectName": "yuri_5d503d4e"
+        },
+        {
+            "type": "java",
+            "name": "test5",
+            "request": "launch",
+            "mainClass": "cslg.day_3.test5",
+            "projectName": "yuri_5d503d4e"
+        },
+        {
+            "type": "java",
+            "name": "test5",
+            "request": "launch",
+            "mainClass": "java.cslg.day_3.test5",
+            "projectName": "yuri_5d503d4e"
+        },
+        {
+            "type": "java",
+            "name": "Test4",
+            "request": "launch",
+            "mainClass": "cslg.day_2.Test4",
+            "projectName": "yuri_5d503d4e"
+        },
+        {
+            "type": "java",
+            "name": "Launch 基础语法",
+            "request": "launch",
+            "mainClass": "learn.基础语法",
+            "projectName": "yuri_5d503d4e"
+        },
+        {
+            "type": "java",
+            "name": "Launch hello_world",
+            "request": "launch",
+            "mainClass": "learn.hello_world",
+            "projectName": "yuri_5d503d4e"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug",
+            "program": "${fileDirname}/${fileBasenameNoExtension}.out",
+            "args": [],
+            "cwd": "${fileDirname}",
+            "preLaunchTask": "cppbuild"
+        }
+    ]
+}

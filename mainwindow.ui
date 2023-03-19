@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1485</width>
+    <height>1004</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>290</y>
+      <width>641</width>
+      <height>661</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>40</y>
+      <width>321</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QWidget" name="sql_show" native="true">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>290</y>
+      <width>751</width>
+      <height>661</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="edit_search">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>170</y>
+      <width>411</width>
+      <height>61</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_search">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>170</y>
+      <width>101</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>查询</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1485</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="create_file"/>
+    <addaction name="open_file"/>
+    <addaction name="kurseni_file"/>
+   </widget>
+   <widget class="QMenu" name="menuMySQL">
+    <property name="title">
+     <string>MySQL</string>
+    </property>
+    <addaction name="read_data"/>
+   </widget>
+   <widget class="QMenu" name="menuqita_other">
+    <property name="title">
+     <string>其他</string>
+    </property>
+    <addaction name="go_back"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menuMySQL"/>
+   <addaction name="menuqita_other"/>
+  </widget>
+  <action name="actionsdfsdf">
+   <property name="text">
+    <string>sdfsdf</string>
+   </property>
+  </action>
+  <action name="actionsfsdf">
+   <property name="text">
+    <string>sfsdf</string>
+   </property>
+  </action>
+  <action name="actionsfsdf_2">
+   <property name="text">
+    <string>sfsdf</string>
+   </property>
+  </action>
+  <action name="actionsfdsf">
+   <property name="text">
+    <string>sfdsf</string>
+   </property>
+  </action>
+  <action name="create_file">
+   <property name="text">
+    <string>新建文件</string>
+   </property>
+  </action>
+  <action name="open_file">
+   <property name="text">
+    <string>打开文件</string>
+   </property>
+  </action>
+  <action name="read_data">
+   <property name="text">
+    <string>数据读取</string>
+   </property>
+  </action>
+  <action name="kurseni_file">
+   <property name="text">
+    <string>保存文件</string>
+   </property>
+  </action>
+  <action name="go_back">
+   <property name="text">
+    <string>返回登陆界面</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="images.qrc"/>
+  <include location="images.qrc"/>
+ </resources>
+ <connections/>
+</ui>
