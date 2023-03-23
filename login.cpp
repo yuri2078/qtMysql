@@ -14,10 +14,10 @@ Login::Login(QWidget *parent) :
         ui(new Ui::login),
         setting(new Setting(":/settings.json")),
                 mainWindow(new MainWindow(this, &db)) {
-    setWindowIcon(QIcon(":/images/icon.png"));
+    setWindowIcon(QIcon(":/images/login/icon.png"));
     ui->setupUi(this);
     this->setWindowTitle("登陆");
-    auto bg_login = new QMovie(":/images/QQ/back.gif", QByteArray(), this);
+    auto bg_login = new QMovie(":/images/login/back.gif", QByteArray(), this);
     bg_login->start();
     ui->bg->setMovie(bg_login);
 
@@ -39,28 +39,28 @@ Login::Login(QWidget *parent) :
         mainWindow->hide();
     });
 
+    setModal(true);
 
 }
 
 Login::~Login() {
     delete ui;
     delete setting;
+    db.close();
 }
 
 void Login::login_init() {
     auto &user_info = setting->getMysql()->user_info;
     for (auto iter = user_info.begin(); iter != user_info.end(); iter++) {
         this->ui->username->addItem(iter.key());
-        this->ui->password->setText(iter.value());
     }
-
+    this->ui->password->setText(user_info.begin().value());
     connect(ui->button_login, &QPushButton::clicked, [=]() {
         if (user_info.find(ui->password->text()) == user_info.end()) {
             QMessageBox::critical(this, "错误", "密码错误捏!");
         } else {
             if (loginDataBase()) {
-                this->hide();
-                mainWindow->show();
+                login();
             } else {
                 QMessageBox::critical(this, "错误", "登陆失败!");
             }
@@ -81,6 +81,11 @@ bool Login::loginDataBase() {
     db.setUserName(ui->username->lineEdit()->text());
     db.setPassword(ui->password->text());
     return db.open();
+}
+
+void Login::login() {
+    this->hide();
+    mainWindow->show();
 }
 
 

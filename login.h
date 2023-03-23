@@ -29,6 +29,7 @@ private:
 
     void login_init();
     bool loginDataBase();
+    void login();
 };
 
 

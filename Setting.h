@@ -21,6 +21,7 @@ public:
 public:
     explicit Setting(const QString &file_name);
     ~Setting();
+    bool setDebug(bool = false);
     Mysql * getMysql();
     QMap<QString, int> & getLoginUi();
     QMap<QString, bool> & getSettings();
@@ -33,6 +34,7 @@ private:
     QMap<QString, bool> settings; // 保存系统设置
 
     bool file_is_open; //
+    bool is_debug;
 };
 
 

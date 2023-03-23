@@ -1,0 +1,206 @@
+#bg_widget {
+    background-color: rgb(224, 227, 255);
+}
+
+#main_widget {
+    border-radius: 20px;
+    background-color: rgb(249, 249, 251);
+}
+
+#left_widget, #right_widget {
+    border: 2px solid pink;
+    border-radius: 20px;
+    background-color: white;
+}
+
+#left_widget QPushButton {
+    color: rgb(168, 168, 179);
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border: 1px solid pink;
+    text-align: left;
+    padding-left: 15px;
+    font-size: 26px;
+}
+
+#left_widget QPushButton:hover {
+    color: rgb(109, 119, 203);
+    background-color: #EBEDFF;
+}
+
+#left_widget QPushButton:!checked {
+    background-color: white;
+}
+
+#left_widget QPushButton:checked {
+    background-color: #EBEDFF;
+    color: rgb(109, 119, 203);
+}
+
+
+
+#left_bg {
+    border: 1px solid pink;
+}
+
+
+
+#tool_label {
+    color: rgb(168, 168, 179);
+}
+
+#avatar_label {
+    background-color: rgb(235, 237, 255);
+    border-radius: 28px;
+}
+
+#name_label {
+    color: rgb(108, 109, 129);
+    background-color: transparent;
+    font-size: 22px;
+    border: none;
+}
+
+#user_label {
+    color: rgb(182, 183, 193);
+    background-color: transparent;
+    font-size: 16px;
+    border: none;
+}
+
+#notification_label {
+    color: rgb(249, 249, 251);
+    background-color: rgb(249, 249, 251);
+    border: none;
+    border-radius: 26px;
+}
+
+
+#right_main_widget {
+    background-color: rgb(109, 119, 203);
+    border-radius: 26px;
+}
+
+#right_note_1 {
+    color: white;
+    font-size: 25px;
+}
+
+#right_note_2 {
+    color: rgb(160, 167, 222);
+    font-size: 18px;
+}
+
+#right_frame {
+    background-color: white;
+    border-radius: 12px;
+}
+
+#attachment_button {
+    background-color: rgb(240, 241, 250);
+    border-radius: 12px;
+    border: none;
+}
+
+#link_label {
+    color: rgb(166, 167, 179);
+    font-size: 19px;
+    border: none;
+    border-radius: 12px;
+}
+
+#account_label {
+    color: rgb(90, 92, 114);
+    font-size: 30px;
+    background-color: transparent;
+}
+
+#right_widget #label_1,
+#right_widget #label_2,
+#right_widget #label_3,
+#right_widget #label_4 {
+    color: rgb(249, 249, 251);
+    background-color: rgb(249, 249, 251);
+    border: none;
+    border-radius: 26px;
+}
+
+#right_widget #button_1,
+#right_widget #button_2,
+#right_widget #button_3,
+#right_widget #button_4 {
+    background-color: rgb(240, 241, 250);
+    border-radius: 12px;
+    border: none;
+}
+
+#right_widget #frame_1,
+#right_widget #frame_2,
+#right_widget #frame_3,
+#right_widget #frame_4 {
+    border: 1px solid cadetblue;
+    border-radius: 18px;
+}
+
+#page {
+    background-color: white;
+    border-radius: 18px;
+    border: 2px solid pink;
+}
+
+#search_frame {
+    border: 2px solid black;
+    border-radius: 12px;
+    background-color: transparent;
+}
+
+#search_icon {
+    border: none;
+}
+
+#search_edit {
+    color: black;
+    border: none;
+    background-color: transparent;
+}
+
+#search_button {
+
+    background-color: #34cceb;
+    border: 2px solid #1aadff;
+    border-radius: 5px;
+    color: #FFFFFF;
+    padding: 5px 10px;
+}
+
+#search_button:hover {
+    background-color: #1aadff;
+}
+
+#search_button:pressed {
+    background-color: #0099ff;
+}
+
+#search_button:disabled {
+    background-color: #BBBBBB;
+    border: 2px solid #888888;
+    color: #888888;
+}
+
+QPushButton#logout_button {
+    background-color: #FF3333;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 40px;
+    padding: 8px 16px;
+}
+
+QPushButton#logout_button:hover {
+    background-color: #FF6666;
+}
+
+QPushButton#logout_button:pressed {
+    background-color: #CC0000;
+    border: none;
+}

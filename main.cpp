@@ -1,4 +1,3 @@
-#include "mainwindow.h"
 #include "login.h"
 #include <QApplication>
 #include <QTranslator>
@@ -17,6 +16,7 @@ int main(int argc, char *argv[])
         }
     }
     Login login;
+//    Login::connect(&Login, &Q)
     login.show();
     return a.exec();
 }
