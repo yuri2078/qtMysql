@@ -2,9 +2,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QPicture>
-
-
-
+#include <QtNetwork/QtNetwork>
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent,QSqlDatabase *db) :
     QMainWindow(parent),
@@ -12,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent,QSqlDatabase *db) :
     db(db)
 {
     ui->setupUi(this);
+    ui->stackedWidget->setCurrentIndex(0);
 
     connect(ui->logout_button, &QPushButton::clicked, [this](){
         emit loginEnd();
@@ -57,6 +57,32 @@ MainWindow::MainWindow(QWidget *parent,QSqlDatabase *db) :
 //        this->ui->stackedWidget->show();
 //        this->ui->stackedWidget->setCurrentIndex(0);
 //    });
+    connect(ui->connect_client, &QPushButton::clicked, [this](){
+        QTcpSocket socket;
+        socket.connectToHost("127.0.0.1", 5005);
+        QDateTime currentDateTime = QDateTime::currentDateTime();
+        QString currentDateTimeString = currentDateTime.toString("yyyy-MM-dd hh:mm:ss");
+        if(socket.waitForConnected(3000)){
+            this->ui->info_label->setPlainText(ui->info_label->toPlainText() + currentDateTimeString + " : 客户端连接成功\n");
+            this->ui->connect_client->setText("客户端连接成功!");
+        }else {
+            this->ui->info_label->setPlainText(ui->info_label->toPlainText() + currentDateTimeString + " : 客户端连接失败捏\n");
+        }
+
+        if (socket.state() == QAbstractSocket::ConnectedState) {
+
+            // 如果为ConnectedState，则发送数据
+            if (socket.isWritable()) {
+                socket.write("你好呀！");
+                socket.flush();
+                socket.waitForBytesWritten();
+            }
+        }
+
+        socket.disconnectFromHost();
+
+        socket.close();
+    });
 
 }
 
@@ -157,7 +183,27 @@ void MainWindow::setChangeButton() {
 bool MainWindow::init() {
     setIcons();
     setChangeButton();
+    setChangePage();
+
     return false;
+}
+
+void MainWindow::setChangePage() {
+    connect(ui->home_button, &QPushButton::clicked, [this](){
+        ui->stackedWidget->setCurrentIndex(0);
+    });
+
+    connect(ui->note_button, &QPushButton::clicked, [this](){
+        ui->stackedWidget->setCurrentIndex(1);
+    });
+
+    connect(ui->mysql_button, &QPushButton::clicked, [this](){
+        ui->stackedWidget->setCurrentIndex(2);
+    });
+
+    connect(ui->adv_button, &QPushButton::clicked, [this](){
+        ui->stackedWidget->setCurrentIndex(3);
+    });
 }
 
 //void MainWindow::saveFile() {

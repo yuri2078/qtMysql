@@ -44,6 +44,7 @@ private:
     QSqlQueryModel model;
     void setIcons();
     void setChangeButton();
+    void setChangePage();
 
 };
 #endif // MAINWINDOW_H

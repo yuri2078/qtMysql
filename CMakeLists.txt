@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools )
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(Qt6 COMPONENTS Network REQUIRED)
 
 find_package(Qt6 REQUIRED COMPONENTS Sql)
 
@@ -57,6 +58,7 @@ endif()
 
 target_link_libraries(yuri PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(yuri PRIVATE Qt6::Sql)
+target_link_libraries(yuri PRIVATE Qt6::Network)
 
 set_target_properties(yuri PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
