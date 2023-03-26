@@ -12,6 +12,7 @@
 #include <QtSql/QSqlQueryModel>
 #include <QSqlQuery>
 #include <QSqlError>
+#include "myserver.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -45,6 +46,8 @@ private:
     void setIcons();
     void setChangeButton();
     void setChangePage();
+    MyServer *server;
+    QTcpSocket *socket;
 
 };
 #endif // MAINWINDOW_H

@@ -1194,7 +1194,13 @@ QPushButton:hover {
 
 QPushButton:pressed {
     background-color: #ff1493;
-}</string>
+}
+
+QPushButton:checked {
+    background-color: blue;
+}
+
+</string>
        </property>
        <property name="text">
         <string>客户端连接</string>
@@ -1271,6 +1277,24 @@ QPushButton:pressed {
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Source Code Pro'; font-size:26pt; font-weight:400; font-style:italic;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="fssong">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>940</y>
+         <width>391</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 85, 255);</string>
        </property>
       </widget>
      </widget>

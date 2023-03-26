@@ -27,7 +27,8 @@ set(PROJECT_SOURCES
         login.cpp
         login.ui
         ${TS_FILES}
-        Setting.cpp Setting.h)
+        Setting.cpp Setting.h
+        myserver.h myserver.cpp)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(yuri
