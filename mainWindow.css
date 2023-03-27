@@ -142,12 +142,6 @@
     border-radius: 18px;
 }
 
-#page {
-    background-color: white;
-    border-radius: 18px;
-    border: 2px solid pink;
-}
-
 #search_frame {
     border: 2px solid black;
     border-radius: 12px;
@@ -184,49 +178,58 @@
 #search_button:disabled {
     background-color: #BBBBBB;
     border: 2px solid #888888;
-    color: #888888;
+    color: #888888
 }
 
-QPushButton#logout_button {
+#logout_button {
     background-color: #FF3333;
     color: white;
     border: none;
     border-radius: 12px;
     font-size: 40px;
-    padding: 8px 16px;
+    padding: 8px 16px
 }
 
-QPushButton#logout_button:hover {
+#logout_button:hover {
     background-color: #FF6666;
 }
 
-QPushButton#logout_button:pressed {
+#logout_button:pressed {
     background-color: #CC0000;
     border: none;
 }
 
- /*////*/
-QPushButton {
-    color: #ffffff;
-    background-color: #ff69b4;
-    border: none;
-    border-radius: 20px;
+
+#connect_client,
+#connect_server{
+    border: 1px solid pink;
+    background-color: #34cceb;
+    font-size: 28px;
+    border-radius: 12px;
+}
+
+#connect_client:checked,
+#connect_server:checked{
+    background-color: #CC0000;
+}
+
+#connect_client:hover,
+#connect_server:hover{
+    background-color: #157c91;
     font-size: 32px;
-    padding: 8px;
 }
 
-QPushButton:hover {
-    background-color: #ffb6c1;
+#info_label,
+#send_client,
+#send_server{
+    background-color: wheat;
+    color: #157c91;
+    font-size: 24px;
+    align-content: center;
+    border-radius: 10px;
 }
 
-QPushButton:pressed {
-    background-color: #ff1493;
-}
-
-QPushButton:checked {
-    background-color: blue;
-}
-
-QPushButton:!checked {
-    background-color: red;
+#talk_frame{
+    background-color: #EBEDFF;
+    border-radius: 12px;
 }

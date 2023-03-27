@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
   });
 
   connect(ui->connect_server, &QPushButton::clicked, [this]() {
-    server = new MyServer(this, 2078);
+    server = new MyServer(this);
   });
 }
 

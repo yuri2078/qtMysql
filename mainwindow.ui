@@ -158,12 +158,6 @@
     border-radius: 18px;
 }
 
-#page {
-    background-color: white;
-    border-radius: 18px;
-    border: 2px solid pink;
-}
-
 #search_frame {
     border: 2px solid black;
     border-radius: 12px;
@@ -200,25 +194,60 @@
 #search_button:disabled {
     background-color: #BBBBBB;
     border: 2px solid #888888;
-    color: #888888;
+    color: #888888
 }
 
-QPushButton#logout_button {
+#logout_button {
     background-color: #FF3333;
     color: white;
     border: none;
     border-radius: 12px;
     font-size: 40px;
-    padding: 8px 16px;
+    padding: 8px 16px
 }
 
-QPushButton#logout_button:hover {
+#logout_button:hover {
     background-color: #FF6666;
 }
 
-QPushButton#logout_button:pressed {
+#logout_button:pressed {
     background-color: #CC0000;
     border: none;
+}
+
+
+#connect_client,
+#connect_server{
+    border: 1px solid pink;
+    background-color: #34cceb;
+    font-size: 28px;
+    border-radius: 12px;
+}
+
+#connect_client:checked,
+#connect_server:checked{
+    background-color: #CC0000;
+}
+
+#connect_client:hover,
+#connect_server:hover{
+    background-color: #157c91;
+    font-size: 32px;
+}
+
+#info_label,
+#send_client,
+#send_server{
+    background-color: wheat;
+    color: #157c91;
+    font-size: 24px;
+    align-content: center;
+    border-radius: 10px;
+}
+
+#talk_frame{
+    background-color: #EBEDFF;
+    border-radius: 12px;
 }</string>
   </property>
   <widget class="QWidget" name="bg_widget">
@@ -461,7 +490,8 @@ QPushButton#logout_button:pressed {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);</string>
+      <string notr="true">
+</string>
      </property>
      <property name="currentIndex">
       <number>3</number>
@@ -1167,8 +1197,8 @@ QPushButton#logout_button:pressed {
       <widget class="QPushButton" name="connect_client">
        <property name="geometry">
         <rect>
-         <x>290</x>
-         <y>780</y>
+         <x>690</x>
+         <y>760</y>
          <width>251</width>
          <height>121</height>
         </rect>
@@ -1179,31 +1209,10 @@ QPushButton#logout_button:pressed {
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton {
-    color: #ffffff;
-    background-color: #ff69b4;
-    border: none;
-    border-radius: 20px;
-    font-size: 32px;
-    padding: 8px;
-}
-
-QPushButton:hover {
-    background-color: #ffb6c1;
-}
-
-QPushButton:pressed {
-    background-color: #ff1493;
-}
-
-QPushButton:checked {
-    background-color: blue;
-}
-
-</string>
+        <string notr="true">background-color: rgb(85, 170, 255);</string>
        </property>
        <property name="text">
-        <string>客户端连接</string>
+        <string>启动客户端</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -1212,8 +1221,8 @@ QPushButton:checked {
       <widget class="QPushButton" name="connect_server">
        <property name="geometry">
         <rect>
-         <x>920</x>
-         <y>780</y>
+         <x>1130</x>
+         <y>760</y>
          <width>251</width>
          <height>121</height>
         </rect>
@@ -1224,25 +1233,10 @@ QPushButton:checked {
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton {
-    color: #ffffff;
-    background-color: #ff69b4;
-    border: none;
-    border-radius: 20px;
-    font-size: 32px;
-    padding: 8px;
-}
-
-QPushButton:hover {
-    background-color: #ffb6c1;
-}
-
-QPushButton:pressed {
-    background-color: #ff1493;
-}</string>
+        <string notr="true">background-color: rgb(85, 170, 255);</string>
        </property>
        <property name="text">
-        <string>服务端连接</string>
+        <string>启动服务端</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -1251,9 +1245,9 @@ QPushButton:pressed {
       <widget class="QTextEdit" name="info_label">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>40</y>
-         <width>1441</width>
+         <x>0</x>
+         <y>10</y>
+         <width>531</width>
          <height>720</height>
         </rect>
        </property>
@@ -1265,7 +1259,7 @@ QPushButton:pressed {
        </property>
        <property name="font">
         <font>
-         <pointsize>26</pointsize>
+         <pointsize>-1</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -1275,26 +1269,60 @@ QPushButton:pressed {
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Source Code Pro'; font-size:26pt; font-weight:400; font-style:italic;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Source Code Pro'; font-size:24px; font-weight:400; font-style:italic;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:26pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="fssong">
+      <widget class="QTextEdit" name="send_client">
        <property name="geometry">
         <rect>
-         <x>530</x>
-         <y>940</y>
-         <width>391</width>
-         <height>71</height>
+         <x>30</x>
+         <y>790</y>
+         <width>431</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>20</pointsize>
+         <pointsize>-1</pointsize>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(0, 85, 255);</string>
+        <string notr="true"/>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="send_server">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>920</y>
+         <width>431</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>-1</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+      </widget>
+      <widget class="QFrame" name="talk_frame">
+       <property name="geometry">
+        <rect>
+         <x>550</x>
+         <y>10</y>
+         <width>921</width>
+         <height>721</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
        </property>
       </widget>
      </widget>

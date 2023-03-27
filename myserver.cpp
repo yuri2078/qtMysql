@@ -1,12 +1,11 @@
 #include "myserver.h"
 
-MyServer::MyServer(QObject *parent, quint16 port) : QTcpServer(parent) {
-  connect(this, &MyServer::newConnection, this, &MyServer::newClient);
-  if (listen(QHostAddress::Any, port))
-    qDebug() << "Server listening on port " << serverPort();
+MyServer::MyServer(QObject *parent) : QTcpServer(parent) {
+  
 }
 
 // 当一个新的客户端连接请求到达时，为其创建新的 QTcpSocket
+
 void MyServer::newClient() {
   QTcpSocket *socket = nextPendingConnection();
   connect(socket, &QTcpSocket::readyRead, this, &MyServer::receiveData);
@@ -19,13 +18,9 @@ void MyServer::newClient() {
 // 当客户端发来消息时，接收并处理
 void MyServer::receiveData() {
   QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
-  QString &str = messages[socket];
-  str = socket->readAll();
-
-  qDebug() << "当前读取的数据 -> " << str;
+  messages[socket] = socket->readAll();
+  qDebug() << "当前读取的数据 -> " << messages[socket];
 }
-
-void MyServer::processMessage(QTcpSocket *socket, QDataStream &data) {}
 
 quint16 MyServer::getUsers() { return messages.size(); }
 
@@ -38,4 +33,15 @@ MyServer::~MyServer() {
 
 const QString MyServer::getMsg(QTcpSocket *socket) {
   return messages.value(socket);
+}
+
+bool MyServer::start(QHostAddress host, quint16 port) {
+  if (listen(host, port)) {
+    qDebug() << "Server listening on port " << serverPort();
+    return false;
+  } else {
+    connect(this, &MyServer::newConnection, this, &MyServer::newClient);
+  }
+    
+  return true;
 }
