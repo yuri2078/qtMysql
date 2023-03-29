@@ -16,6 +16,8 @@ find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Sql)
 
 set(TS_FILES yuri_zh_CN.ts)
+aux_source_directory(src MY_SRC)
+
 
 set(PROJECT_SOURCES
         main.cpp
@@ -28,7 +30,9 @@ set(PROJECT_SOURCES
         login.ui
         ${TS_FILES}
         Setting.cpp Setting.h
-        myserver.h myserver.cpp)
+        myserver.h myserver.cpp
+        ${MY_SRC}
+        )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(yuri

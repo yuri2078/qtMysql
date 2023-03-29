@@ -1,6 +1,6 @@
 {
   "Settings" : {
-    "is_remember_password" : false,
+    "is_remember_password" : true,
     "is_auto_login" : false
   },
 
@@ -9,7 +9,8 @@
     "port" : 3306,
     "host_name" : "127.0.0.1",
     "user_info" : {
-      "root" : "root"
+      "root" : "root",
+      "yuri" : "yuri"
     }
   },
 

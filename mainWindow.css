@@ -28,9 +28,9 @@
     background-color: #EBEDFF;
 }
 
-#left_widget QPushButton:!checked {
+/* #left_widget QPushButton:!checked {
     background-color: white;
-}
+} */
 
 #left_widget QPushButton:checked {
     background-color: #EBEDFF;
@@ -225,7 +225,6 @@
     background-color: wheat;
     color: #157c91;
     font-size: 24px;
-    align-content: center;
     border-radius: 10px;
 }
 

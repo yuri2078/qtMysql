@@ -54,16 +54,16 @@ void Login::login_init() {
     if (user_info.find(ui->password->text()) == user_info.end()) {
       QMessageBox::critical(this, "错误", "密码错误捏!");
     } else {
-      if (loginDataBase()) {
-        login();
-      } else {
-        QMessageBox::critical(this, "错误", "登陆失败!");
-      }
+      // if (loginDataBase()) {
+      //   login();
+      // } else {
+      //   QMessageBox::critical(this, "错误", "登陆失败!");
+      // }
+      login();
     }
   });
 
-  ui->remember_password->setChecked(
-      setting->getSettings()["is_remember_password"]);
+  ui->remember_password->setChecked(setting->getSettings()["is_remember_password"]);
   connect(ui->remember_password, &QCheckBox::stateChanged, [=](int state) {
     setting->getSettings()["is_remember_password"] = (state == Qt::Checked);
   });

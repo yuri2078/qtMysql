@@ -3,6 +3,7 @@
 #include <QDateTime>
 #include <QPicture>
 #include <QtNetwork/QtNetwork>
+#include <QDesktopServices>
 #include <qabstractsocket.h>
 #include <qpushbutton.h>
 #include <qtcpserver.h>
@@ -30,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
       // qDebug() << "连接成功!";
       ui->info_label->setPlainText(QDateTime::currentDateTime().toString() + "连接成功!\n");
     } else {
-      ui->info_label->setPlainText(QDateTime::currentDateTime().toString() + "连接失败!");
+      ui->info_label->setPlainText(QDateTime::currentDateTime().toString() + "连接失败!\n");
     }
 
     if (socket->state() == QAbstractSocket::ConnectedState) {
@@ -78,12 +79,18 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
 
   connect(ui->connect_server, &QPushButton::clicked, [this]() {
     server = new MyServer(this);
+    if (server->start()) {
+      info_label_log("服务端启动成功!");
+    }
+  });
+
+  connect(ui->search_button, &QPushButton::clicked, [this]() {
+    QDesktopServices::openUrl(QUrl("https://www.bing.com/search?q=" + ui->search_edit->text())); 
   });
 }
 
 MainWindow::~MainWindow() {
   delete ui;
-  delete server;
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
