@@ -10,7 +10,7 @@ void MyServer::newClient() {
   QTcpSocket *socket = nextPendingConnection();
   connect(socket, &QTcpSocket::readyRead, this, &MyServer::receiveData);
   messages.insert(socket, "");
-  qDebug() << "New client connected: " << socket->peerAddress().toString() << ":" << socket->peerPort();
+  last_error = "New client connected: " + socket->peerAddress().toString() + ":" + socket->peerPort();
 }
 
 // 当客户端发来消息时，接收并处理
@@ -27,13 +27,14 @@ const QString MyServer::getMsg(QTcpSocket *socket) {
 }
 
 bool MyServer::start(QHostAddress host, quint16 port) {
-  if (listen(host, port)) {
-    qDebug() << "Server listening on port " << serverPort();
+  is_servering = listen(host, port);
+  if (is_servering) {
+    last_error = "Server listening on port " + QString::number(serverPort());
     connect(this, &MyServer::newConnection, this, &MyServer::newClient);
   } else {
-    return false;
+    last_error = "Server listening on port " + QString::number(serverPort()) + " is error!";
   }
-  return true;
+  return is_servering;
 }
 MyServer::~MyServer() {
   for (auto begin = messages.begin(); begin != messages.end(); begin++) {
@@ -44,71 +45,4 @@ MyServer::~MyServer() {
 
 // QTcpSocket *socket = new QTcpSocket(this);
 
-// connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onSocketError(QAbstractSocket::SocketError)));
 
-// void MyClass::onSocketError(QAbstractSocket::SocketError socketError)
-// {
-//     switch (socketError) {
-//         case QAbstractSocket::ConnectionRefusedError:
-//             qDebug() << "连接被拒绝.";
-//             break;
-//         case QAbstractSocket::RemoteHostClosedError:
-//             qDebug() << "远程主机关闭了连接.";
-//             break;
-//         case QAbstractSocket::HostNotFoundError:
-//             qDebug() << "主机未找到.";
-//             break;
-//         case QAbstractSocket::SocketAccessError:
-//             qDebug() << "套接字访问错误.";
-//             break;
-//         case QAbstractSocket::SocketResourceError:
-//             qDebug() << "套接字资源错误.";
-//             break;
-//         case QAbstractSocket::SocketTimeoutError:
-//             qDebug() << "套接字超时错误.";
-//             break;
-//         case QAbstractSocket::DatagramTooLargeError:
-//             qDebug() << "数据报太大错误.";
-//             break;
-//         case QAbstractSocket::NetworkError:
-//             qDebug() << "网络错误.";
-//             break;
-//         case QAbstractSocket::AddressInUseError:
-//             qDebug() << "地址正在使用错误.";
-//             break;
-//         case QAbstractSocket::SocketAddressNotAvailableError:
-//             qDebug() << "套接字地址不可用错误.";
-//             break;
-//         case QAbstractSocket::UnsupportedSocketOperationError:
-//             qDebug() << "不支持的套接字操作错误.";
-//             break;
-//         case QAbstractSocket::UnfinishedSocketOperationError:
-//             qDebug() << "未完成的套接字操作错误.";
-//             break;
-//         case QAbstractSocket::ProxyAuthenticationRequiredError:
-//             qDebug() << "代理身份验证失败错误.";
-//             break;
-//         case QAbstractSocket::SslHandshakeFailedError:
-//             qDebug() << "SSL握手失败错误.";
-//             break;
-//         case QAbstractSocket::ProxyConnectionRefusedError:
-//             qDebug() << "代理连接被拒绝错误.";
-//             break;
-//         case QAbstractSocket::ProxyConnectionClosedError:
-//             qDebug() << "代理连接关闭错误.";
-//             break;
-//         case QAbstractSocket::ProxyConnectionTimeoutError:
-//             qDebug() << "代理连接超时错误.";
-//             break;
-//         case QAbstractSocket::ProxyNotFoundError:
-//             qDebug() << "代理未找到错误.";
-//             break;
-//         case QAbstractSocket::ProxyProtocolError:
-//             qDebug() << "代理协议错误.";
-//             break;
-//         case QAbstractSocket::UnknownSocketError:
-//         default:
-//             qDebug() << "未知的套接字错误.";
-//             break;
-//     }
-// }

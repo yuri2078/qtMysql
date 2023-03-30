@@ -1,53 +1,52 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QSqlDatabase>
+#include "myclient.h"
+#include "myserver.h"
+#include <QFile>
 #include <QFileDialog>
+#include <QMainWindow>
 #include <QMessageBox>
 #include <QMovie>
-#include <QFile>
 #include <QPushButton>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQueryModel>
-#include <QSqlQuery>
-#include <QSqlError>
-#include "myserver.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+  Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent,QSqlDatabase *db);
-    ~MainWindow();
+  MainWindow(QWidget *parent, QSqlDatabase *db);
+  ~MainWindow();
 
-//    void saveFile();
-//    void openFile();
-    bool init();
+  //    void saveFile();
+  //    void openFile();
+  bool init();
 
-
-    void closeEvent(QCloseEvent *event) override;
-//    void paintEvent(QPaintEvent *) override;
-
+  void closeEvent(QCloseEvent *event) override;
+  //    void paintEvent(QPaintEvent *) override;
 
 signals:
-    void loginEnd();
-
+  void loginEnd();
 
 private:
-    Ui::MainWindow *ui;
-    QSqlDatabase *db;
-    QSqlQueryModel model;
-    void setIcons();
-    void setChangeButton();
-    void setChangePage();
-    MyServer *server;
-    QTcpSocket *socket;
-
+  Ui::MainWindow *ui;
+  QSqlDatabase *db;
+  QSqlQueryModel model;
+  void setIcons();
+  void setChangeButton();
+  void setChangePage();
+  void sendMessageInit();
+  MyServer *server;
+  MyClient *client;
 };
 #endif // MAINWINDOW_H

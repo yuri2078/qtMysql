@@ -1,97 +1,48 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QDateTime>
+#include <QDesktopServices>
 #include <QPicture>
 #include <QtNetwork/QtNetwork>
-#include <QDesktopServices>
 #include <qabstractsocket.h>
 #include <qpushbutton.h>
 #include <qtcpserver.h>
 #include <qtcpsocket.h>
 
-#define info_label_log(str) ui->info_label->setPlainText(ui->info_label->toPlainText() + QDateTime::currentDateTime().toString() + str + "\n");
+#define info_label_log(str)                   \
+  ui->info_label->insertPlainText(            \
+                               QDateTime::currentDateTime().toString("hh:mm:ss  ") + str + \
+                               "\n");
 
 MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
     : QMainWindow(parent), ui(new Ui::MainWindow), db(db) {
   ui->setupUi(this);
   ui->stackedWidget->setCurrentIndex(0);
-  connect(ui->logout_button, &QPushButton::clicked, [this](){
-      emit loginEnd();
-  });
+  connect(ui->logout_button, &QPushButton::clicked,
+          [this]() { emit loginEnd(); });
 
   init();
 
   connect(ui->connect_client, &QPushButton::clicked, [this]() {
-    if (socket == nullptr) {
-      socket = new QTcpSocket(this);
-      socket->connectToHost("127.0.0.1", 2078);
-    } 
-    
-    if (socket->waitForConnected()) {
-      // qDebug() << "连接成功!";
-      ui->info_label->setPlainText(QDateTime::currentDateTime().toString() + "连接成功!\n");
-    } else {
-      ui->info_label->setPlainText(QDateTime::currentDateTime().toString() + "连接失败!\n");
-    }
-
-    if (socket->state() == QAbstractSocket::ConnectedState) {
-      info_label_log("状态 : 连接成功!")
-      if (socket->isWritable()) {
-        info_label_log("写入状态 : ok!")
-        QTimer *timer = new QTimer(this);
-        QTimer *hz= new QTimer(this);
-        timer->setInterval(10000);
-        hz->setInterval(1000);
-
-
-        connect(hz, &QTimer::timeout, [=]() {
-          int write_size = socket->write(("发送信息 -> " + QDateTime::currentDateTime().toString()).toUtf8());
-          if (write_size < 0) {
-            info_label_log("写入失败!");
-          }
-        });
-
-        connect(timer, &QTimer::timeout, [=]() {
-          // socket->disconnectFromHost();
-          // socket->close();
-          if (socket->state() == QAbstractSocket::UnconnectedState) {
-            info_label_log("断开连接")
-          }
-          timer->stop();
-          hz->stop();
-        });
-
-        timer->start();
-        hz->start();
-
-      } else {
-        info_label_log("写入状态 : no!")
-      }
-    } else {
-      info_label_log("状态 : 连接失败!")
-    }
-
-    info_label_log("当前共有 -> " + QString::number(server->getUsers()))
-    // socket->disconnectFromHost();
-    
-    
+    client = new MyClient(this);
+    client->start("127.0.0.1", 2078);
+    ui->connect_client->setChecked(client->is_start);
+    info_label_log(client->last_error);
   });
 
   connect(ui->connect_server, &QPushButton::clicked, [this]() {
     server = new MyServer(this);
-    if (server->start()) {
-      info_label_log("服务端启动成功!");
-    }
+    server->start();
+    info_label_log(server->last_error);
   });
 
   connect(ui->search_button, &QPushButton::clicked, [this]() {
-    QDesktopServices::openUrl(QUrl("https://www.bing.com/search?q=" + ui->search_edit->text())); 
+    QDesktopServices::openUrl(
+        QUrl("https://www.bing.com/search?q=" + ui->search_edit->text()));
   });
 }
 
-MainWindow::~MainWindow() {
-  delete ui;
-}
+MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
   qApp->exit();
@@ -190,6 +141,7 @@ bool MainWindow::init() {
   setIcons();
   setChangeButton();
   setChangePage();
+  sendMessageInit();
 
   return false;
 }
@@ -208,6 +160,12 @@ void MainWindow::setChangePage() {
           [this]() { ui->stackedWidget->setCurrentIndex(3); });
 }
 
+void MainWindow::sendMessageInit() {
+  ui->send_client->setPlaceholderText("给服务器发送消息");
+  ui->send_server->setPlaceholderText("给客户端发送消息");
+  
+  // connect(ui->send_client, &QTextEdit::enterEvent(QEnterEvent *event), const char *amember)
+}
 // void MainWindow::saveFile() {
 //     QString str =
 //     QFileDialog::getSaveFileName(this,"请打开一个文件","/home/yuri","");
@@ -241,45 +199,44 @@ void MainWindow::setChangePage() {
 //     file.close();
 // }
 //    connect(ui->open_file, &QAction::triggered, this,
-  //    &MainWindow::openFile);
-  //
-  //    connect(ui->kurseni_file, &QAction::triggered, this,
-  //    &MainWindow::saveFile);
-  //
-  //    connect(ui->go_back,&QAction::triggered, [this]() {
-  //        emit this->loginEnd();
-  //    });
-  //
-  //    connect(this->ui->search_data, &QAction::triggered,[this](){
-  //        this->ui->stackedWidget->show();
-  //        this->ui->stackedWidget->setCurrentIndex(1);
-  //    });
-  //
-  //    this->ui->table_view->hide();
-  //    this->ui->stackedWidget->close();
-  //
-  //    connect(ui->button_search, &QPushButton::clicked, [this](){
-  //        if(this->db->open()) {
-  //            this->db->setDatabaseName("miku");
-  //            QSqlQuery query;
-  //            if(!query.exec(this->ui->edit_search->text())) {
-  //                // 数据库查询失败，弹出错误提示框
-  //                QMessageBox::critical(this, "错误", "查询数据库时发生错误："
-  //                + query.lastError().text());
-  //            } else {
-  //                model.setQuery(this->ui->edit_search->text());
-  //                // 将查询结果显示在TableView控件中
-  //                ui->table_view->setModel(&model);
-  //                this->ui->table_view->show();
-  //            }
-  //
-  //        }else{
-  //            qDebug() << "打开失败!";
-  //        }
-  //    });
-  //
-  //    connect(ui->create_file,&QAction::triggered,[this](){
-  //        this->ui->stackedWidget->show();
-  //        this->ui->stackedWidget->setCurrentIndex(0);
-  //    });
-  ;
+//    &MainWindow::openFile);
+//
+//    connect(ui->kurseni_file, &QAction::triggered, this,
+//    &MainWindow::saveFile);
+//
+//    connect(ui->go_back,&QAction::triggered, [this]() {
+//        emit this->loginEnd();
+//    });
+//
+//    connect(this->ui->search_data, &QAction::triggered,[this](){
+//        this->ui->stackedWidget->show();
+//        this->ui->stackedWidget->setCurrentIndex(1);
+//    });
+//
+//    this->ui->table_view->hide();
+//    this->ui->stackedWidget->close();
+//
+//    connect(ui->button_search, &QPushButton::clicked, [this](){
+//        if(this->db->open()) {
+//            this->db->setDatabaseName("miku");
+//            QSqlQuery query;
+//            if(!query.exec(this->ui->edit_search->text())) {
+//                // 数据库查询失败，弹出错误提示框
+//                QMessageBox::critical(this, "错误", "查询数据库时发生错误："
+//                + query.lastError().text());
+//            } else {
+//                model.setQuery(this->ui->edit_search->text());
+//                // 将查询结果显示在TableView控件中
+//                ui->table_view->setModel(&model);
+//                this->ui->table_view->show();
+//            }
+//
+//        }else{
+//            qDebug() << "打开失败!";
+//        }
+//    });
+//
+//    connect(ui->create_file,&QAction::triggered,[this](){
+//        this->ui->stackedWidget->show();
+//        this->ui->stackedWidget->setCurrentIndex(0);
+//    });

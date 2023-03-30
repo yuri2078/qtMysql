@@ -7,7 +7,8 @@
     background-color: rgb(249, 249, 251);
 }
 
-#left_widget, #right_widget {
+#left_widget,
+#right_widget {
     border: 2px solid pink;
     border-radius: 20px;
     background-color: white;
@@ -201,34 +202,34 @@
 
 
 #connect_client,
-#connect_server{
+#connect_server {
     border: 1px solid pink;
     background-color: #34cceb;
     font-size: 28px;
     border-radius: 12px;
 }
 
-#connect_client:checked,
-#connect_server:checked{
+#connect_client QPushButton:checked,
+#connect_server QPushButton:checked {
     background-color: #CC0000;
 }
 
 #connect_client:hover,
-#connect_server:hover{
+#connect_server:hover {
     background-color: #157c91;
     font-size: 32px;
 }
 
 #info_label,
 #send_client,
-#send_server{
+#send_server {
     background-color: wheat;
     color: #157c91;
     font-size: 24px;
     border-radius: 10px;
 }
 
-#talk_frame{
+#talk_frame {
     background-color: #EBEDFF;
     border-radius: 12px;
 }

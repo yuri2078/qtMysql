@@ -23,7 +23,8 @@
     background-color: rgb(249, 249, 251);
 }
 
-#left_widget, #right_widget {
+#left_widget,
+#right_widget {
     border: 2px solid pink;
     border-radius: 20px;
     background-color: white;
@@ -217,34 +218,34 @@
 
 
 #connect_client,
-#connect_server{
+#connect_server {
     border: 1px solid pink;
     background-color: #34cceb;
     font-size: 28px;
     border-radius: 12px;
 }
 
-#connect_client:checked,
-#connect_server:checked{
+#connect_client QPushButton:checked,
+#connect_server QPushButton:checked {
     background-color: #CC0000;
 }
 
 #connect_client:hover,
-#connect_server:hover{
+#connect_server:hover {
     background-color: #157c91;
     font-size: 32px;
 }
 
 #info_label,
 #send_client,
-#send_server{
+#send_server {
     background-color: wheat;
     color: #157c91;
     font-size: 24px;
     border-radius: 10px;
 }
 
-#talk_frame{
+#talk_frame {
     background-color: #EBEDFF;
     border-radius: 12px;
 }</string>
@@ -407,7 +408,7 @@
 }</string>
       </property>
       <property name="text">
-       <string>  广告位</string>
+       <string>  C/S 测试</string>
       </property>
       <property name="iconSize">
        <size>
@@ -1196,7 +1197,7 @@
        <property name="geometry">
         <rect>
          <x>690</x>
-         <y>760</y>
+         <y>810</y>
          <width>251</width>
          <height>121</height>
         </rect>
@@ -1206,8 +1207,13 @@
          <pointsize>-1</pointsize>
         </font>
        </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(85, 170, 255);</string>
+        <string notr="true">QPushButton:checked {
+    background-color: #CC0000;
+}</string>
        </property>
        <property name="text">
         <string>启动客户端</string>
@@ -1220,7 +1226,7 @@
        <property name="geometry">
         <rect>
          <x>1130</x>
-         <y>760</y>
+         <y>810</y>
          <width>251</width>
          <height>121</height>
         </rect>
@@ -1230,14 +1236,22 @@
          <pointsize>-1</pointsize>
         </font>
        </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(85, 170, 255);</string>
+        <string notr="true">QPushButton:checked {
+    background-color: #CC0000;
+}</string>
        </property>
        <property name="text">
         <string>启动服务端</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
        </property>
       </widget>
       <widget class="QTextEdit" name="info_label">
@@ -1293,8 +1307,8 @@ p, li { white-space: pre-wrap; }
       <widget class="QLineEdit" name="send_client">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>770</y>
+         <x>60</x>
+         <y>800</y>
          <width>501</width>
          <height>51</height>
         </rect>
@@ -1306,8 +1320,8 @@ p, li { white-space: pre-wrap; }
       <widget class="QLineEdit" name="send_server">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>880</y>
+         <x>60</x>
+         <y>900</y>
          <width>501</width>
          <height>51</height>
         </rect>

@@ -31,6 +31,7 @@ set(PROJECT_SOURCES
         ${TS_FILES}
         Setting.cpp Setting.h
         myserver.h myserver.cpp
+        myclient.h myclient.cpp
         ${MY_SRC}
         )
 
