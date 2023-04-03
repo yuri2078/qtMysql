@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "mylineedit.h"
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QPicture>
@@ -9,13 +10,13 @@
 #include <qtcpserver.h>
 #include <qtcpsocket.h>
 
-#define info_label_log(str)                   \
-  ui->info_label->insertPlainText(            \
-                               QDateTime::currentDateTime().toString("hh:mm:ss  ") + str + \
-                               "\n");
+#define info_label_log(str)                                                    \
+  ui->info_label->insertPlainText(                                             \
+      QDateTime::currentDateTime().toString("hh:mm:ss  ") + str + "\n");
 
 MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
-    : QMainWindow(parent), ui(new Ui::MainWindow), db(db) {
+    : QMainWindow(parent), ui(new Ui::MainWindow), db(db),
+      server(new MyServer(this)), client(new MyClient(this)) {
   ui->setupUi(this);
   ui->stackedWidget->setCurrentIndex(0);
   connect(ui->logout_button, &QPushButton::clicked,
@@ -24,15 +25,24 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
   init();
 
   connect(ui->connect_client, &QPushButton::clicked, [this]() {
-    client = new MyClient(this);
+    if (client->is_start) {
+      info_label_log("客户端已经启动!")
+          ui->connect_client->setChecked(server->is_servering);
+      return;
+    }
+
     client->start("127.0.0.1", 2078);
     ui->connect_client->setChecked(client->is_start);
     info_label_log(client->last_error);
   });
 
   connect(ui->connect_server, &QPushButton::clicked, [this]() {
-    server = new MyServer(this);
+    if (server->is_servering) {
+      ui->connect_server->setChecked(server->is_servering);
+      info_label_log("服务端端已经启动!") return;
+    }
     server->start();
+    ui->connect_server->setChecked(server->is_servering);
     info_label_log(server->last_error);
   });
 
@@ -40,6 +50,28 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
     QDesktopServices::openUrl(
         QUrl("https://www.bing.com/search?q=" + ui->search_edit->text()));
   });
+
+  auto send_client = new MyLineEdit(ui->frame);
+  send_client->setPlaceholderText("给服务器发送消息!");
+  
+  connect(send_client, &MyLineEdit::sendMessage, [this, send_client]() {
+    this->client->write(send_client->text().toUtf8());
+    send_client->setText("");
+  });
+  send_client->move(60, 40);
+  send_client->resize(500, 50);
+
+  auto send_server = new MyLineEdit(ui->frame);
+  send_server->setPlaceholderText("给客户端发送消息!");
+  connect(send_server, &MyLineEdit::sendMessage, [this, send_server]() {
+    server->write(client, send_server->text().toUtf8());
+    send_server->setText("");
+  });
+  send_server->move(60, 160);
+  send_server->resize(500, 50);
+
+  // 将server 服务端与client 客户端连接
+  connect(server, &MyServer::newUser, client, &MyClient::setUser);
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -161,10 +193,11 @@ void MainWindow::setChangePage() {
 }
 
 void MainWindow::sendMessageInit() {
-  ui->send_client->setPlaceholderText("给服务器发送消息");
-  ui->send_server->setPlaceholderText("给客户端发送消息");
-  
-  // connect(ui->send_client, &QTextEdit::enterEvent(QEnterEvent *event), const char *amember)
+  // ui->send_client->setPlaceholderText("给服务器发送消息");
+  // ui->send_server->setPlaceholderText("给客户端发送消息");
+
+  // connect(ui->send_client, &QTextEdit::enterEvent(QEnterEvent *event), const
+  // char *amember)
 }
 // void MainWindow::saveFile() {
 //     QString str =

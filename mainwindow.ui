@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1920</width>
+    <width>1888</width>
     <height>1080</height>
    </rect>
   </property>
@@ -1304,27 +1304,20 @@ p, li { white-space: pre-wrap; }
         <enum>QFrame::Raised</enum>
        </property>
       </widget>
-      <widget class="QLineEdit" name="send_client">
+      <widget class="QFrame" name="frame">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>800</y>
-         <width>501</width>
-         <height>51</height>
+         <x>20</x>
+         <y>750</y>
+         <width>611</width>
+         <height>251</height>
         </rect>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
        </property>
-      </widget>
-      <widget class="QLineEdit" name="send_server">
-       <property name="geometry">
-        <rect>
-         <x>60</x>
-         <y>900</y>
-         <width>501</width>
-         <height>51</height>
-        </rect>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
        </property>
       </widget>
      </widget>

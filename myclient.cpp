@@ -1,4 +1,5 @@
 #include "myclient.h"
+#include "myserver.h"
 #include <qabstractsocket.h>
 
 MyClient::MyClient(QObject *parent) : QTcpSocket(parent) {
@@ -6,6 +7,10 @@ MyClient::MyClient(QObject *parent) : QTcpSocket(parent) {
   connect(this, &MyClient::errorOccurred, this, &MyClient::onSocketError);
   is_start = false;
   last_error = "目前没有发生错误!";
+  connect(this, &MyClient::readyRead, [this]() {
+    last_msg = this->readAll();
+    qDebug() << "来自服务端 -> " << last_msg;
+  });
 }
 
 MyClient::~MyClient() {}
@@ -25,6 +30,11 @@ bool MyClient::start(const QString &hostname, quint16 port, int msecs) {
   }
 
   return true;
+}
+
+void MyClient::setUser(QTcpSocket *socket) {
+  MyServer *server = qobject_cast<MyServer *>(sender());
+  server->insertUser(this, socket);
 }
 
 quint16 MyClient::write(const QByteArray &data) {

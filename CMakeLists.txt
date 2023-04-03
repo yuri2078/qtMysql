@@ -32,6 +32,7 @@ set(PROJECT_SOURCES
         Setting.cpp Setting.h
         myserver.h myserver.cpp
         myclient.h myclient.cpp
+        mylineedit.h mylineedit.cpp
         ${MY_SRC}
         )
 
