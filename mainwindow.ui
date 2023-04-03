@@ -1303,6 +1303,27 @@ p, li { white-space: pre-wrap; }
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>190</y>
+          <width>611</width>
+          <height>371</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>140</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 85, 127);</string>
+        </property>
+        <property name="text">
+         <string>待开发</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QFrame" name="frame">
        <property name="geometry">

@@ -19,13 +19,14 @@ void MyServer::newClient() {
 void MyServer::receiveData() {
   QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
   messages[socket] = socket->readAll();
+  emit readyRead();
   qDebug() << "来自客户端 -> " << messages[socket];
 }
 
 quint16 MyServer::getUsers() { return messages.size(); }
 
-const QString MyServer::getMsg(QTcpSocket *socket) {
-  return messages.value(socket);
+const QString MyServer::getMsg(MyClient *socket) {
+  return messages.value(user[socket]);
 }
 
 
@@ -40,14 +41,30 @@ bool MyServer::start(QHostAddress host, quint16 port) {
   return is_servering;
 }
 
+void MyServer::end() {
+  disconnect(this, &MyServer::newConnection, this, &MyServer::newClient);
+  is_servering = false;
+  for (auto client : user) {
+    disconnect(client, &QTcpSocket::readyRead, this, &MyServer::receiveData);
+    client->close();
+  }
+
+  user.clear();
+  messages.clear();
+  close();
+}
+
 quint16 MyServer::write(MyClient *client, const QByteArray &data) {
+  if (is_servering == false) {
+    last_error = "服务端未在运行!";
+    return 0;
+  }
   if (user.find(client) != user.end()) {
     return user[client]->write(data);
   } else {
-    qDebug() << "没有对应用户";
+    last_error = "没有对应用户";
   }
-  
-  return -1;
+  return 0;
 }
 
 void MyServer::insertUser(MyClient *client, QTcpSocket * socket) {

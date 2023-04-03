@@ -5,45 +5,60 @@
 MyClient::MyClient(QObject *parent) : QTcpSocket(parent) {
   // 连接报错处理
   connect(this, &MyClient::errorOccurred, this, &MyClient::onSocketError);
+
+  // 设置默认值
   is_start = false;
   last_error = "目前没有发生错误!";
-  connect(this, &MyClient::readyRead, [this]() {
-    last_msg = this->readAll();
-    qDebug() << "来自服务端 -> " << last_msg;
-  });
 }
 
-MyClient::~MyClient() {}
+// 析构默认调用end函数
+MyClient::~MyClient() {
+  end();
+}
 
+// 开启连接，默认连接到本地 的 2078  端口
 bool MyClient::start(const QString &hostname, quint16 port, int msecs) {
   if (is_start) {
-    disconnectFromHost();
+    disconnectFromHost(); // 如果之前连接了，就先断开连接
   }
+
   connectToHost(hostname, port); // 连接host
   is_start = waitForConnected(msecs);
   if (is_start) {
-    qDebug() << "连接 " << hostname << ":" << port << " 成功捏!";
+    // 如果能够读取就读取数据并存如last_msg
     last_error = "连接 " + hostname + ": " + QString::number(port) + " 成功!";
-    return true;
-  } else {
-    return false;
+    connect(this, &MyClient::readyRead, [this]() {
+      last_msg = this->readAll();
+    });
   }
-
-  return true;
+  return is_start;
 }
 
+// 向服务器发送数据，返回发送成功数据大小，否则返回 0
+quint16 MyClient::write(const QByteArray &data) {
+  if (state() == MyClient::ConnectedState && MyClient::isWritable()) {
+    return QTcpSocket::write(data);
+  }
+  last_error = "还没到可写状态";
+  return 0;
+}
+
+// 结束连接函数
+void MyClient::end() {
+  is_start = false;
+  last_error = "客户端断开连接!";
+  close();
+}
+/*  slots 函数 */
+
+
+// 将MyClient * 绑定到对方的socket 中，方便在外部通过myclient 对服务端发送消息
 void MyClient::setUser(QTcpSocket *socket) {
   MyServer *server = qobject_cast<MyServer *>(sender());
   server->insertUser(this, socket);
 }
 
-quint16 MyClient::write(const QByteArray &data) {
-  if (state() == MyClient::ConnectedState && MyClient::isWritable()) {
-    return QTcpSocket::write(data);
-  }
-  return -1;
-}
-
+// 报错slots 处理
 void MyClient::onSocketError(QAbstractSocket::SocketError socketError) {
   switch (socketError) {
   case QAbstractSocket::ConnectionRefusedError:

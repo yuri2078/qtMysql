@@ -20,20 +20,26 @@ public:
 
   quint16 getUsers();
   quint16 write(MyClient *client, const QByteArray &data);
-  const QString getMsg(QTcpSocket *socket);
+  const QString getMsg(MyClient *socket);
   bool start(QHostAddress host = QHostAddress::Any, quint16 port = 2078);
+  void end();
   bool is_servering;
 
-signals:
   
+
+signals:
+
   void newUser(QTcpSocket *);
+  void readyRead();
+  
+
 
 private:
   QMap<QTcpSocket *, QString> messages;
   QMap<MyClient *, QTcpSocket *> user;
 
   void insertUser(MyClient *, QTcpSocket *);
-
+  
   void newClient();
   void receiveData();
   
