@@ -16,25 +16,30 @@ find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Sql)
 
 set(TS_FILES yuri_zh_CN.ts)
-aux_source_directory(src MY_SRC)
 
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        images.qrc
-        login.h
-        login.cpp
-        login.ui
-        ${TS_FILES}
-        Setting.cpp Setting.h
-        myserver.h myserver.cpp
-        myclient.h myclient.cpp
-        mylineedit.h mylineedit.cpp
-        ${MY_SRC}
-        )
+    main.cpp
+    ${TS_FILES}
+    include/login.h 
+    include/mainwindow.h 
+    include/myclient.h 
+    include/myserver.h 
+    include/Setting.h 
+    include/mylineedit.h
+
+    src/login.cpp
+    src/mainwindow.cpp  
+    src/myclient.cpp
+    src/myserver.cpp
+    src/Setting.cpp
+    src/mylineedit.cpp
+
+    ui/login.ui
+    ui/mainwindow.ui
+
+    images.qrc
+)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(yuri

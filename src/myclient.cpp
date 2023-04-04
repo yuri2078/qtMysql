@@ -1,5 +1,5 @@
-#include "myclient.h"
-#include "myserver.h"
+#include "../include/myclient.h"
+#include "../include/myserver.h"
 #include <qabstractsocket.h>
 
 MyClient::MyClient(QObject *parent) : QTcpSocket(parent) {

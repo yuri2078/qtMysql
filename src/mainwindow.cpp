@@ -1,6 +1,6 @@
-#include "mainwindow.h"
-#include "./ui_mainwindow.h"
-#include "mylineedit.h"
+#include "../include/mainwindow.h"
+#include "../ui/ui_mainwindow.h"
+#include "../include/mylineedit.h"
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QPicture>

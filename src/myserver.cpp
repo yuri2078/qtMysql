@@ -1,11 +1,16 @@
-#include "myserver.h"
+#include "../include/myserver.h"
 
 MyServer::MyServer(QObject *parent) : QTcpServer(parent) {
+  last_error = "初始化";
   is_servering = false;
 }
 
-// 当一个新的客户端连接请求到达时，为其创建新的 QTcpSocket
+// 析构函数，调用end 函数，释放资源
+MyServer::~MyServer() {
+  end();
+}
 
+// 当一个新的客户端连接请求到达时，为其创建新的 QTcpSocket
 void MyServer::newClient() {
   QTcpSocket *socket = nextPendingConnection();
   connect(socket, &QTcpSocket::readyRead, this, &MyServer::receiveData);
@@ -23,13 +28,16 @@ void MyServer::receiveData() {
   qDebug() << "来自客户端 -> " << messages[socket];
 }
 
-quint16 MyServer::getUsers() { return messages.size(); }
-
+// 通过myclient 返回数据
 const QString MyServer::getMsg(MyClient *socket) {
+  if (user.find(socket) == user.end()) {
+    last_error = "没有对应的tcpSocket 连接";
+    return "";
+  }
   return messages.value(user[socket]);
 }
 
-
+// 监听指定ip地址的端口，默认监听任意ip地址的 2078 端口
 bool MyServer::start(QHostAddress host, quint16 port) {
   is_servering = listen(host, port);
   if (is_servering) {
@@ -41,24 +49,28 @@ bool MyServer::start(QHostAddress host, quint16 port) {
   return is_servering;
 }
 
+// 结束所有连接，并且释放所有资源
 void MyServer::end() {
-  disconnect(this, &MyServer::newConnection, this, &MyServer::newClient);
+  disconnect(this, &MyServer::newConnection, this, &MyServer::newClient); // 断开连接
   is_servering = false;
+
   for (auto client : user) {
-    disconnect(client, &QTcpSocket::readyRead, this, &MyServer::receiveData);
-    client->close();
+    disconnect(client, &QTcpSocket::readyRead, this, &MyServer::receiveData); // 断开连接
+    client->close(); // 关闭连接
   }
 
-  user.clear();
-  messages.clear();
+  user.clear(); // 清空用户
+  messages.clear(); // 清空消息
   close();
 }
 
+// 向指定的myclient 发送数据
 quint16 MyServer::write(MyClient *client, const QByteArray &data) {
   if (is_servering == false) {
     last_error = "服务端未在运行!";
     return 0;
   }
+
   if (user.find(client) != user.end()) {
     return user[client]->write(data);
   } else {
@@ -72,14 +84,3 @@ void MyServer::insertUser(MyClient *client, QTcpSocket * socket) {
     user[client] = socket;
   }
 }
-
-MyServer::~MyServer() {
-  for (auto begin = messages.begin(); begin != messages.end(); begin++) {
-    qDebug() << "信息 -> " << begin.value();
-  }
-  close();
-}
-
-// QTcpSocket *socket = new QTcpSocket(this);
-
-

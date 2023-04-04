@@ -1,4 +1,4 @@
-#include "mylineedit.h"
+#include "../include/mylineedit.h"
 // #include <qnamespace.h>
 
 MyLineEdit::MyLineEdit(QWidget *parent) : QLineEdit(parent) {

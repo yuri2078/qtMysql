@@ -4,15 +4,16 @@
 // You may need to build the project (run Qt uic code generator) to get
 // "ui_ligon.h" resolved
 
-#include "login.h"
-#include "ui_login.h"
+#include "../include/login.h"
+#include "../ui/ui_login.h"
 #include <QMessageBox>
 #include <QMovie>
 
 Login::Login(QWidget *parent)
     : QDialog(parent), ui(new Ui::login),
-      setting(new Setting(":/settings.json")),
+      setting(new Setting),
       mainWindow(new MainWindow(this, &db)) {
+  // 默认登陆设置(图标，标题，背景之类的)
   setWindowIcon(QIcon(":/images/login/icon.png"));
   ui->setupUi(this);
   this->setWindowTitle("登陆");
@@ -20,21 +21,31 @@ Login::Login(QWidget *parent)
   bg_login->start();
   ui->bg->setMovie(bg_login);
 
-  connect(ui->button_close, &QPushButton::clicked, [this]() { this->close(); });
+  // 关闭窗口关闭按钮
+  connect(ui->button_close, &QPushButton::clicked, [this]() {
+    this->close();
+  });
 
-  connect(ui->button_min, &QPushButton::clicked,
-          [this]() { this->showMinimized(); });
 
+  // 最小化按钮
+  connect(ui->button_min, &QPushButton::clicked, [this]() {
+    this->showMinimized();
+  });
+
+  // 设置账号密码默认提示
   ui->username->lineEdit()->setPlaceholderText("QQ号码/手机/邮箱");
   ui->password->setPlaceholderText("密码");
 
-  login_init();
-
+  // 退出登陆 槽函数关联
   connect(this->mainWindow, &MainWindow::loginEnd, [this]() {
     this->show();
     mainWindow->hide();
   });
 
+  if (setting->getFromFile(":/settings.json") == false) {
+    qDebug() << "配置文件打开失败!";
+  }
+  login_init();
   setModal(true);
 }
 
@@ -45,30 +56,30 @@ Login::~Login() {
 }
 
 void Login::login_init() {
+  // 获取配置文件中的账号和密码
   auto &user_info = setting->getMysql()->user_info;
   for (auto iter = user_info.begin(); iter != user_info.end(); iter++) {
     this->ui->username->addItem(iter.key());
   }
+
+  // 设置默认登陆密码
   this->ui->password->setText(user_info.begin().value());
   connect(ui->button_login, &QPushButton::clicked, [=]() {
     if (user_info.find(ui->password->text()) == user_info.end()) {
       QMessageBox::critical(this, "错误", "密码错误捏!");
     } else {
-      // if (loginDataBase()) {
-      //   login();
-      // } else {
-      //   QMessageBox::critical(this, "错误", "登陆失败!");
-      // }
       login();
     }
   });
 
-  ui->remember_password->setChecked(setting->getSettings()["is_remember_password"]);
+  // 设置是否记住密码
+  ui->remember_password->setChecked((*setting->getSettings())["is_remember_password"]);
   connect(ui->remember_password, &QCheckBox::stateChanged, [=](int state) {
-    setting->getSettings()["is_remember_password"] = (state == Qt::Checked);
+    (*setting->getSettings())["is_remember_password"] = (state == Qt::Checked);
   });
 }
 
+// 登陆数据库，返回是否登陆成功
 bool Login::loginDataBase() {
   auto mysql = this->setting->getMysql();
   db = QSqlDatabase::addDatabase("QMYSQL");
@@ -79,6 +90,7 @@ bool Login::loginDataBase() {
   return db.open();
 }
 
+// 登陆函数
 void Login::login() {
   this->hide();
   mainWindow->show();
