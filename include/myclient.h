@@ -28,12 +28,13 @@ public:
   void end();
   quint16 write(const QByteArray &data);
 
-/* slots */
+  /* slots */
+  
   void setUser(QTcpSocket *);
 
 private:
-  
   /* signals */
+
   void onSocketError(QAbstractSocket::SocketError socketError);
 };
 

@@ -16,7 +16,7 @@ MyClient::~MyClient() {
   end();
 }
 
-// 开启连接，默认连接到本地 的 2078  端口
+// 开启连接，默认等待 30000ms
 bool MyClient::start(const QString &hostname, quint16 port, int msecs) {
   if (is_start) {
     disconnectFromHost(); // 如果之前连接了，就先断开连接
@@ -47,6 +47,7 @@ quint16 MyClient::write(const QByteArray &data) {
 void MyClient::end() {
   is_start = false;
   last_error = "客户端断开连接!";
+  last_msg = "";
   close();
 }
 /*  slots 函数 */

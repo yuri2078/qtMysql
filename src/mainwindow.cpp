@@ -1,6 +1,7 @@
 #include "../include/mainwindow.h"
 #include "../ui/ui_mainwindow.h"
 #include "../include/mylineedit.h"
+#include "../include/note.h"
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QPicture>
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
     : QMainWindow(parent), ui(new Ui::MainWindow), db(db),
       server(new MyServer(this)), client(new MyClient(this)) {
   ui->setupUi(this);
+  setWindowIcon(QIcon(":/images/login/icon.png"));
 
   ui->stackedWidget->setCurrentIndex(0); // 设置初始界面是 主页
 
@@ -36,7 +38,14 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
 
   init(); // 固定初始化
 
+  auto main_edit = new Note(ui->page_2);
+  main_edit->show();
+  main_edit->resize(1390, 930);
+
+  connect(ui->open_file, &QAction::triggered, main_edit, &Note::openFile);
+  connect(ui->save_file, &QAction::triggered, main_edit, &Note::saveFile);
   
+
 }
 
 MainWindow::~MainWindow() {
@@ -238,38 +247,7 @@ void MainWindow::sendMessageInit() {
   // 将server 服务端与client 客户端连接，接受到新连接就将他门重新连接
   connect(server, &MyServer::newUser, client, &MyClient::setUser);
 }
-// void MainWindow::saveFile() {
-//     QString str =
-//     QFileDialog::getSaveFileName(this,"请打开一个文件","/home/yuri","");
-//     this->ui->stackedWidget->show();
-//     this->ui->stackedWidget->setCurrentIndex(0);
-//     QFile file(str,this);
-//     file.open(QFile::ReadWrite);
-//     if(file.isOpen()){
-//         QString new_txt = ui->textEdit->toPlainText();
-//         file.write(new_txt.toUtf8());
-//     } else {
-//         qDebug() << "打开失败 -> " << file.error();
-//     }
-//     file.close();
-// }
-//
-// void MainWindow::openFile() {
-//     QString str =
-//     QFileDialog::getOpenFileName(this,"请打开一个文件","/home/yuri","");
-//     this->ui->stackedWidget->show();
-//     this->ui->stackedWidget->setCurrentIndex(0);
-//     QFile file(str,this);
-//     file.open(QFile::ReadWrite);
-//     if(file.isOpen()){
-//         auto file_txt = file.readAll();
-//         ui->textEdit->setText(file_txt);
-//     } else {
-//         qDebug() << "打开失败 -> " << file.error();
-//     }
-//
-//     file.close();
-// }
+
 //    connect(ui->open_file, &QAction::triggered, this,
 //    &MainWindow::openFile);
 //

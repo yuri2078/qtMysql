@@ -1,0 +1,17 @@
+QTextEdit {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-family: Fira Code Medium;
+    padding: 4px;
+    font-size: 30px;
+    font-weight: normal;
+    color: #555;
+    background-color: #f2f2f2; 
+}
+
+QTextEdit:focus {
+    border-color: #0078d7;
+    color: #0078d7;
+    font-style: italic;
+    background-color: #fff; 
+}

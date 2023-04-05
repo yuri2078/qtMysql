@@ -25,15 +25,17 @@ set(PROJECT_SOURCES
     include/mainwindow.h 
     include/myclient.h 
     include/myserver.h 
-    include/Setting.h 
+    include/setting.h 
     include/mylineedit.h
+    include/note.h
 
     src/login.cpp
     src/mainwindow.cpp  
     src/myclient.cpp
     src/myserver.cpp
-    src/Setting.cpp
+    src/setting.cpp
     src/mylineedit.cpp
+    src/note.cpp
 
     ui/login.ui
     ui/mainwindow.ui

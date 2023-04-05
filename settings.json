@@ -1,25 +1,22 @@
 {
-  "Settings" : {
-    "is_remember_password" : true,
-    "is_auto_login" : false
-  },
-
-
-  "MySql":{
-    "port" : 3306,
-    "host_name" : "127.0.0.1",
-    "user_info" : {
-      "root" : "root",
-      "yuri" : "yuri"
+    "Login_ui": {
+        "height": 520,
+        "height_default": 520,
+        "width": 430,
+        "width_default": 430,
+        "x": 0,
+        "y": 0
+    },
+    "MySql": {
+        "hostname": "",
+        "port": 3306,
+        "user_info": {
+            "root": "root",
+            "yuri": "yuri"
+        }
+    },
+    "Settings": {
+        "is_auto_login": false,
+        "is_remember_password": true
     }
-  },
-
-  "Login_ui":{
-    "width_default" : 430,
-    "height_default": 520,
-    "width" : 430,
-    "height" : 520,
-    "x" : 0,
-    "y" : 0
-  }
 }

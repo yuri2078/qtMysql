@@ -7,7 +7,7 @@
 
 #include <QDialog>
 #include "./mainwindow.h"
-#include "./Setting.h"
+#include "./setting.h"
 #include <QSqlDatabase>
 
 QT_BEGIN_NAMESPACE

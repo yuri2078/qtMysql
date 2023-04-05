@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>settings.json</file>
         <file>images/login/icon.png</file>
         <file>images/login/back.gif</file>
         <file>images/logo.png</file>
@@ -22,5 +21,6 @@
         <file>images/icons/wechat.png</file>
         <file>images/icons/bilibili.png</file>
         <file>images/icons/search.png</file>
+        <file>css/note.css</file>
     </qresource>
 </RCC>

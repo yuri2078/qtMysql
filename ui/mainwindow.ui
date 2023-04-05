@@ -239,6 +239,8 @@
 #info_label,
 #send_client,
 #send_server {
+    width: 60px;
+    height: 30px;
     background-color: wheat;
     color: #157c91;
     font-size: 24px;
@@ -248,7 +250,25 @@
 #talk_frame {
     background-color: #EBEDFF;
     border-radius: 12px;
-}</string>
+}
+
+#main_edit {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 4px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+    background-color: #f2f2f2; 
+}
+
+#main_edit:focus {
+    border-color: #0078d7;
+    color: #0078d7;
+    font-style: italic;
+    background-color: #fff; 
+}
+</string>
   </property>
   <widget class="QWidget" name="bg_widget">
    <property name="styleSheet">
@@ -493,7 +513,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="styleSheet">
@@ -1345,60 +1365,38 @@ p, li { white-space: pre-wrap; }
     </widget>
    </widget>
   </widget>
-  <action name="actionsdfsdf">
-   <property name="text">
-    <string>sdfsdf</string>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1888</width>
+     <height>36</height>
+    </rect>
    </property>
-  </action>
-  <action name="actionsfsdf">
-   <property name="text">
-    <string>sfsdf</string>
-   </property>
-  </action>
-  <action name="actionsfsdf_2">
-   <property name="text">
-    <string>sfsdf</string>
-   </property>
-  </action>
-  <action name="actionsfdsf">
-   <property name="text">
-    <string>sfdsf</string>
-   </property>
-  </action>
-  <action name="create_file">
-   <property name="text">
-    <string>新建文件</string>
-   </property>
-  </action>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="open_file"/>
+    <addaction name="save_file"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
   <action name="open_file">
    <property name="text">
     <string>打开文件</string>
    </property>
   </action>
-  <action name="read_data">
-   <property name="text">
-    <string>数据读取</string>
-   </property>
-  </action>
-  <action name="kurseni_file">
+  <action name="save_file">
    <property name="text">
     <string>保存文件</string>
    </property>
   </action>
-  <action name="go_back">
-   <property name="text">
-    <string>返回登陆界面</string>
-   </property>
-  </action>
-  <action name="search_data">
-   <property name="text">
-    <string>查询数据</string>
-   </property>
-  </action>
  </widget>
  <resources>
-  <include location="images.qrc"/>
-  <include location="images.qrc"/>
+  <include location="../images.qrc"/>
+  <include location="../images.qrc"/>
  </resources>
  <connections/>
 </ui>

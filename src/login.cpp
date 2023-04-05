@@ -42,19 +42,21 @@ Login::Login(QWidget *parent)
     mainWindow->hide();
   });
 
-  if (setting->getFromFile(":/settings.json") == false) {
+  if (setting->getFromFile(QCoreApplication::applicationDirPath().remove("build") + "settings.json") == false) {
     qDebug() << "配置文件打开失败!";
   }
   login_init();
   setModal(true);
 }
 
+/* ---------------------------------- 析构函数 ---------------------------------- */
 Login::~Login() {
   delete ui;
   delete setting;
   db.close();
 }
 
+// 登陆初始化
 void Login::login_init() {
   // 获取配置文件中的账号和密码
   auto &user_info = setting->getMysql()->user_info;
@@ -62,7 +64,7 @@ void Login::login_init() {
     this->ui->username->addItem(iter.key());
   }
 
-  // 设置默认登陆密码
+  /* -------------------------------  设置默认登陆密码 ------------------------------ */
   this->ui->password->setText(user_info.begin().value());
   connect(ui->button_login, &QPushButton::clicked, [=]() {
     if (user_info.find(ui->password->text()) == user_info.end()) {
@@ -72,7 +74,7 @@ void Login::login_init() {
     }
   });
 
-  // 设置是否记住密码
+  /* -------------------------------- 设置是否记住密码 -------------------------------- */
   ui->remember_password->setChecked((*setting->getSettings())["is_remember_password"]);
   connect(ui->remember_password, &QCheckBox::stateChanged, [=](int state) {
     (*setting->getSettings())["is_remember_password"] = (state == Qt::Checked);

@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QVariantMap> // 可以存储任何数据的map 容器
+#include <QJsonObject>
 
 /*
 读取 设置 json 数据的类
@@ -43,7 +44,10 @@ private:
   QMap<QString, bool> *settings; // 保存系统设置
 
   bool file_is_open; //
-  bool is_debug; // 是否是debug 模式
+  bool is_debug;     // 是否是debug 模式
+  QString fileName;
+
+  void writeJson();
 };
 
 #endif // YURI_SETTING_H
