@@ -252,23 +252,12 @@
     border-radius: 12px;
 }
 
-#main_edit {
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    padding: 4px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #555;
-    background-color: #f2f2f2; 
-}
-
-#main_edit:focus {
-    border-color: #0078d7;
-    color: #0078d7;
-    font-style: italic;
-    background-color: #fff; 
-}
-</string>
+#file_name {
+    background-color: #BBBBBB;
+    color: #157c91;
+    border: 1px solid pink;
+    border-radius: 10px;
+}</string>
   </property>
   <widget class="QWidget" name="bg_widget">
    <property name="styleSheet">
@@ -1210,7 +1199,24 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="page_2"/>
+     <widget class="QWidget" name="page_2">
+      <widget class="QLabel" name="file_name">
+       <property name="geometry">
+        <rect>
+         <x>400</x>
+         <y>10</y>
+         <width>690</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
      <widget class="QWidget" name="page_3"/>
      <widget class="QWidget" name="page_4">
       <widget class="QPushButton" name="connect_client">
@@ -1390,7 +1396,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="save_file">
    <property name="text">
-    <string>保存文件</string>
+    <string>另存文件</string>
    </property>
   </action>
  </widget>

@@ -235,3 +235,10 @@
     background-color: #EBEDFF;
     border-radius: 12px;
 }
+
+#file_name {
+    background-color: #BBBBBB;
+    color: #157c91;
+    border: 1px solid pink;
+    border-radius: 10px;
+}

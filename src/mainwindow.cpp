@@ -41,9 +41,14 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
   auto main_edit = new Note(ui->page_2);
   main_edit->show();
   main_edit->resize(1390, 930);
+  ui->file_name->setText(main_edit->file_name);
 
   connect(ui->open_file, &QAction::triggered, main_edit, &Note::openFile);
   connect(ui->save_file, &QAction::triggered, main_edit, &Note::saveFile);
+  connect(main_edit, &Note::textChanged, [=]() {
+    QString sava = main_edit->isSave ? "" : " *";
+    ui->file_name->setText(main_edit->file_name + sava);
+  });
   
 
 }
