@@ -1,5 +1,4 @@
 #include "../include/note.h"
-
 #include <QFileDialog>
 #include <QKeyEvent>
 #include <QTextBlock>
@@ -18,11 +17,8 @@ Note::Note(QWidget *parent) : QTextEdit(parent) {
   data = new QTextStream(&file);
   
   isSave = true;
-
-  move(50, 50);
   file_name = "/home/yuri/yuriQt/temp/Untitled";
   open(file_name);
-
 }
 
 Note::~Note() {
@@ -72,6 +68,7 @@ void Note::keyPressEvent(QKeyEvent *event) {
     event->accept();
     return;
   }
+
   QTextCursor currentCursor = this->textCursor();
   QString line_text = textCursor().block().text();
 
@@ -90,7 +87,7 @@ void Note::keyPressEvent(QKeyEvent *event) {
       }
     }
 
-    if (line_text.count('{') > line_text.count('}')) {
+    if (toPlainText().count('{') > toPlainText().count('}')) {
 
       QString str = "\n" + QString(' ').repeated(count_space + 2) + "\n" + QString(' ').repeated(count_space) + "}";
       
@@ -111,7 +108,7 @@ void Note::keyPressEvent(QKeyEvent *event) {
     currentCursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
     event->accept();
     this->setTextCursor(currentCursor);
-  } else {    
+  } else { 
     QTextEdit::keyPressEvent(event);
   }
 }

@@ -242,3 +242,8 @@
     border: 1px solid pink;
     border-radius: 10px;
 }
+
+#lineEdit {
+    background-color: white;
+    border-radius: 12px;
+}

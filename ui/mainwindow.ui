@@ -14,250 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bg_widget {
-    background-color: rgb(224, 227, 255);
-}
-
-#main_widget {
-    border-radius: 20px;
-    background-color: rgb(249, 249, 251);
-}
-
-#left_widget,
-#right_widget {
-    border: 2px solid pink;
-    border-radius: 20px;
-    background-color: white;
-}
-
-#left_widget QPushButton {
-    color: rgb(168, 168, 179);
-    background-color: #FFFFFF;
-    border-radius: 10px;
-    border: 1px solid pink;
-    text-align: left;
-    padding-left: 15px;
-    font-size: 26px;
-}
-
-#left_widget QPushButton:hover {
-    color: rgb(109, 119, 203);
-    background-color: #EBEDFF;
-}
-
-/* #left_widget QPushButton:!checked {
-    background-color: white;
-} */
-
-#left_widget QPushButton:checked {
-    background-color: #EBEDFF;
-    color: rgb(109, 119, 203);
-}
-
-
-
-#left_bg {
-    border: 1px solid pink;
-}
-
-
-
-#tool_label {
-    color: rgb(168, 168, 179);
-}
-
-#avatar_label {
-    background-color: rgb(235, 237, 255);
-    border-radius: 28px;
-}
-
-#name_label {
-    color: rgb(108, 109, 129);
-    background-color: transparent;
-    font-size: 22px;
-    border: none;
-}
-
-#user_label {
-    color: rgb(182, 183, 193);
-    background-color: transparent;
-    font-size: 16px;
-    border: none;
-}
-
-#notification_label {
-    color: rgb(249, 249, 251);
-    background-color: rgb(249, 249, 251);
-    border: none;
-    border-radius: 26px;
-}
-
-
-#right_main_widget {
-    background-color: rgb(109, 119, 203);
-    border-radius: 26px;
-}
-
-#right_note_1 {
-    color: white;
-    font-size: 25px;
-}
-
-#right_note_2 {
-    color: rgb(160, 167, 222);
-    font-size: 18px;
-}
-
-#right_frame {
-    background-color: white;
-    border-radius: 12px;
-}
-
-#attachment_button {
-    background-color: rgb(240, 241, 250);
-    border-radius: 12px;
-    border: none;
-}
-
-#link_label {
-    color: rgb(166, 167, 179);
-    font-size: 19px;
-    border: none;
-    border-radius: 12px;
-}
-
-#account_label {
-    color: rgb(90, 92, 114);
-    font-size: 30px;
-    background-color: transparent;
-}
-
-#right_widget #label_1,
-#right_widget #label_2,
-#right_widget #label_3,
-#right_widget #label_4 {
-    color: rgb(249, 249, 251);
-    background-color: rgb(249, 249, 251);
-    border: none;
-    border-radius: 26px;
-}
-
-#right_widget #button_1,
-#right_widget #button_2,
-#right_widget #button_3,
-#right_widget #button_4 {
-    background-color: rgb(240, 241, 250);
-    border-radius: 12px;
-    border: none;
-}
-
-#right_widget #frame_1,
-#right_widget #frame_2,
-#right_widget #frame_3,
-#right_widget #frame_4 {
-    border: 1px solid cadetblue;
-    border-radius: 18px;
-}
-
-#search_frame {
-    border: 2px solid black;
-    border-radius: 12px;
-    background-color: transparent;
-}
-
-#search_icon {
-    border: none;
-}
-
-#search_edit {
-    color: black;
-    border: none;
-    background-color: transparent;
-}
-
-#search_button {
-
-    background-color: #34cceb;
-    border: 2px solid #1aadff;
-    border-radius: 5px;
-    color: black;
-    padding: 5px 10px;
-}
-
-#search_button:hover {
-    background-color: #1aadff;
-}
-
-#search_button:pressed {
-    background-color: #0099ff;
-}
-
-#search_button:disabled {
-    background-color: #BBBBBB;
-    border: 2px solid #888888;
-    color: #888888
-}
-
-#logout_button {
-    background-color: #FF3333;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 40px;
-    padding: 8px 16px
-}
-
-#logout_button:hover {
-    background-color: #FF6666;
-}
-
-#logout_button:pressed {
-    background-color: #CC0000;
-    border: none;
-}
-
-
-#connect_client,
-#connect_server {
-    border: 1px solid pink;
-    background-color: #34cceb;
-    font-size: 28px;
-    border-radius: 12px;
-}
-
-#connect_client QPushButton:checked,
-#connect_server QPushButton:checked {
-    background-color: #CC0000;
-}
-
-#connect_client:hover,
-#connect_server:hover {
-    background-color: #157c91;
-    font-size: 32px;
-}
-
-#info_label,
-#send_client,
-#send_server {
-    width: 60px;
-    height: 30px;
-    background-color: wheat;
-    color: #157c91;
-    font-size: 24px;
-    border-radius: 10px;
-}
-
-#talk_frame {
-    background-color: #EBEDFF;
-    border-radius: 12px;
-}
-
-#file_name {
-    background-color: #BBBBBB;
-    color: #157c91;
-    border: 1px solid pink;
-    border-radius: 10px;
-}</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="bg_widget">
    <property name="styleSheet">
@@ -1187,9 +944,7 @@
         </rect>
        </property>
        <property name="font">
-        <font>
-         <pointsize>-1</pointsize>
-        </font>
+        <font/>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
@@ -1204,7 +959,7 @@
        <property name="geometry">
         <rect>
          <x>400</x>
-         <y>10</y>
+         <y>80</y>
          <width>690</width>
          <height>30</height>
         </rect>
@@ -1216,8 +971,29 @@
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
+      <widget class="Note" name="main_edit">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>170</y>
+         <width>1411</width>
+         <height>771</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
-     <widget class="QWidget" name="page_3"/>
+     <widget class="QWidget" name="page_3">
+      <widget class="Note" name="textEdit">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>250</y>
+         <width>761</width>
+         <height>481</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
      <widget class="QWidget" name="page_4">
       <widget class="QPushButton" name="connect_client">
        <property name="geometry">
@@ -1229,9 +1005,7 @@
         </rect>
        </property>
        <property name="font">
-        <font>
-         <pointsize>-1</pointsize>
-        </font>
+        <font/>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
@@ -1258,9 +1032,7 @@
         </rect>
        </property>
        <property name="font">
-        <font>
-         <pointsize>-1</pointsize>
-        </font>
+        <font/>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
@@ -1296,9 +1068,7 @@
         </size>
        </property>
        <property name="font">
-        <font>
-         <pointsize>-1</pointsize>
-        </font>
+        <font/>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(85, 85, 255);</string>
@@ -1310,8 +1080,8 @@
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Source Code Pro'; font-size:24px; font-weight:400; font-style:italic;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:26pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'JetBrains Mono'; font-size:12pt; font-weight:400; font-style:italic;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Source Code Pro'; font-size:26pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QFrame" name="talk_frame">
@@ -1400,6 +1170,13 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Note</class>
+   <extends>QTextEdit</extends>
+   <header>include/note.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../images.qrc"/>
   <include location="../images.qrc"/>

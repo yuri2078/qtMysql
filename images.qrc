@@ -22,5 +22,7 @@
         <file>images/icons/bilibili.png</file>
         <file>images/icons/search.png</file>
         <file>css/note.css</file>
+        <file>css/login.css</file>
+        <file>css/mainWindow.css</file>
     </qresource>
 </RCC>

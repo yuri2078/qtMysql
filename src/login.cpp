@@ -11,8 +11,8 @@
 
 Login::Login(QWidget *parent)
     : QDialog(parent), ui(new Ui::login),
-      setting(new Setting),
-      mainWindow(new MainWindow(this, &db)) {
+      mainWindow(new MainWindow(this, &db)),
+      setting(new Setting) {
   // 默认登陆设置(图标，标题，背景之类的)
   setWindowIcon(QIcon(":/images/login/icon.png"));
   ui->setupUi(this);
@@ -20,6 +20,11 @@ Login::Login(QWidget *parent)
   auto bg_login = new QMovie(":/images/login/back.gif", QByteArray(), this);
   bg_login->start();
   ui->bg->setMovie(bg_login);
+
+  QFile file(":css/login.css",this);
+  file.open(QFile::ReadOnly | QFile::Text);
+  setStyleSheet(file.readAll());
+  file.close();
 
   // 关闭窗口关闭按钮
   connect(ui->button_close, &QPushButton::clicked, [this]() {

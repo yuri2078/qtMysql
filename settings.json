@@ -17,6 +17,6 @@
     },
     "Settings": {
         "is_auto_login": false,
-        "is_remember_password": true
+        "is_remember_password": false
     }
 }

@@ -9,24 +9,34 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools )
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS  Widgets LinguistTools )
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS  Widgets LinguistTools)
 find_package(Qt6 COMPONENTS Network REQUIRED)
+find_package(Qt6 COMPONENTS StateMachine REQUIRED)
+
+# find_package(Qt6 REQUIRED COMPONENTS StateMachine)
+# target_link_libraries(mytarget PRIVATE Qt6::StateMachine)
 
 find_package(Qt6 REQUIRED COMPONENTS Sql)
-
+# -DCMAKE_TOOLCHAIN_FILE=$path_to_installed_qt/lib/cmake/Qt6/qt.toolchain.cmake
 set(TS_FILES yuri_zh_CN.ts)
+# add_compile_options(-Wall -Werror -Wstrict-prototypes -Wmissing-prototypes)
+
+INCLUDE_DIRECTORIES(
+    ${PROJECT_SOURCE_DIR}
+)
 
 
 set(PROJECT_SOURCES
     main.cpp
     ${TS_FILES}
-    include/login.h 
-    include/mainwindow.h 
-    include/myclient.h 
-    include/myserver.h 
-    include/setting.h 
+    include/setting.h
+    include/mainwindow.h
+    include/login.h
+    
+    include/myclient.h
     include/mylineedit.h
+    include/myserver.h
     include/note.h
 
     src/login.cpp
@@ -42,6 +52,7 @@ set(PROJECT_SOURCES
 
     images.qrc
 )
+
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(yuri
@@ -73,6 +84,7 @@ endif()
 target_link_libraries(yuri PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(yuri PRIVATE Qt6::Sql)
 target_link_libraries(yuri PRIVATE Qt6::Network)
+target_link_libraries(yuri PRIVATE Qt6::StateMachine)
 
 set_target_properties(yuri PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
