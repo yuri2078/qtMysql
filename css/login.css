@@ -21,24 +21,7 @@ QPushButton#button_min:pressed {
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
-#username,
-#password {
-	border: none;
-	border-bottom: 2px solid #999999;
-	background-color: transparent;
-	font-size: 18px;
-	color: #333333;
-}
 
-#username:hover,
-#password:hover {
-	border-bottom: 2px solid #3EB1E8;
-}
-
-#username:focus,
-#password:focus {
-	border-bottom: 2px solid #5EBD3E;
-}
 
 QPushButton#button_login {
 	background-color: #5EBD3E;

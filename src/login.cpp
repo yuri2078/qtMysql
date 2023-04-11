@@ -7,11 +7,11 @@
 #include "../include/login.h"
 #include "../ui/ui_login.h"
 #include <QMessageBox>
+#include <QMouseEvent>
 #include <QMovie>
 
 Login::Login(QWidget *parent)
-    : QDialog(parent), ui(new Ui::login),
-      mainWindow(new MainWindow(this, &db)),
+    : QDialog(parent), ui(new Ui::login), mainWindow(new MainWindow(this, &db)),
       setting(new Setting) {
   // 默认登陆设置(图标，标题，背景之类的)
   setWindowIcon(QIcon(":/images/login/icon.png"));
@@ -20,25 +20,22 @@ Login::Login(QWidget *parent)
   auto bg_login = new QMovie(":/images/login/back.gif", QByteArray(), this);
   bg_login->start();
   ui->bg->setMovie(bg_login);
+  setWindowFlags(Qt::FramelessWindowHint | windowFlags());
 
-  QFile file(":css/login.css",this);
+  QFile file(":css/login.css", this);
   file.open(QFile::ReadOnly | QFile::Text);
   setStyleSheet(file.readAll());
   file.close();
 
   // 关闭窗口关闭按钮
-  connect(ui->button_close, &QPushButton::clicked, [this]() {
-    this->close();
-  });
-
+  connect(ui->button_close, &QPushButton::clicked, [this]() { this->close(); });
 
   // 最小化按钮
-  connect(ui->button_min, &QPushButton::clicked, [this]() {
-    this->showMinimized();
-  });
+  connect(ui->button_min, &QPushButton::clicked,
+          [this]() { this->showMinimized(); });
 
   // 设置账号密码默认提示
-  ui->username->lineEdit()->setPlaceholderText("QQ号码/手机/邮箱");
+  ui->username->setPlaceholderText("QQ号码/手机/邮箱");
   ui->password->setPlaceholderText("密码");
 
   // 退出登陆 槽函数关联
@@ -47,14 +44,17 @@ Login::Login(QWidget *parent)
     mainWindow->hide();
   });
 
-  if (setting->getFromFile(QCoreApplication::applicationDirPath().remove("build") + "settings.json") == false) {
+  if (setting->getFromFile(
+          QCoreApplication::applicationDirPath().remove("build") +
+          "settings.json") == false) {
     qDebug() << "配置文件打开失败!";
   }
   login_init();
   setModal(true);
 }
 
-/* ---------------------------------- 析构函数 ---------------------------------- */
+/* ---------------------------------- 析构函数
+ * ---------------------------------- */
 Login::~Login() {
   delete ui;
   delete setting;
@@ -65,14 +65,15 @@ Login::~Login() {
 void Login::login_init() {
   // 获取配置文件中的账号和密码
   auto &user_info = setting->getMysql()->user_info;
-  for (auto iter = user_info.begin(); iter != user_info.end(); iter++) {
-    this->ui->username->addItem(iter.key());
-  }
+  // for (auto iter = user_info.begin(); iter != user_info.end(); iter++) {
+  //   this->ui->username->addItem(iter.key());
+  // }
 
-  /* -------------------------------  设置默认登陆密码 ------------------------------ */
-  this->ui->password->setText(user_info.begin().value());
+  /* -------------------------------  设置默认登陆密码 * ------------------------------ */
+  // this->ui->username->setText(user_info.begin().key());
+  // this->ui->password->setText(user_info.begin().value());
   connect(ui->button_login, &QPushButton::clicked, [=]() {
-    if (user_info.find(ui->password->text()) == user_info.end()) {
+    if (setting->getSettings()->find("nav-link").value() == false && user_info.find(ui->password->text()) == user_info.end()) {
       QMessageBox::critical(this, "错误", "密码错误捏!");
     } else {
       login();
@@ -80,7 +81,8 @@ void Login::login_init() {
   });
 
   /* -------------------------------- 设置是否记住密码 -------------------------------- */
-  ui->remember_password->setChecked((*setting->getSettings())["is_remember_password"]);
+  ui->remember_password->setChecked(
+      (*setting->getSettings())["is_remember_password"]);
   connect(ui->remember_password, &QCheckBox::stateChanged, [=](int state) {
     (*setting->getSettings())["is_remember_password"] = (state == Qt::Checked);
   });
@@ -92,9 +94,29 @@ bool Login::loginDataBase() {
   db = QSqlDatabase::addDatabase("QMYSQL");
   db.setHostName(mysql->host_name);
   db.setPort(mysql->port);
-  db.setUserName(ui->username->lineEdit()->text());
+  // db.setUserName(ui->username->lineEdit()->text());
   db.setPassword(ui->password->text());
   return db.open();
+}
+
+void Login::mousePressEvent(QMouseEvent *event) {
+  if (event->button() == Qt::LeftButton) {
+    is_move = true;
+    my_pos = event->pos();
+  }
+
+  QDialog::mousePressEvent(event);
+}
+
+void Login::mouseMoveEvent(QMouseEvent *event) {
+  if (is_move) {
+    move(event->pos() - my_pos + pos());
+  }
+}
+
+void Login::mouseReleaseEvent(QMouseEvent *event) {
+  is_move = false;
+  QDialog::mouseReleaseEvent(event);
 }
 
 // 登陆函数

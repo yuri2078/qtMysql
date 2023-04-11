@@ -25,7 +25,7 @@ void MyServer::receiveData() {
   QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
   messages[socket] = socket->readAll();
   emit readyRead();
-  qDebug() << "来自客户端 -> " << messages[socket];
+  // qDebug() << "来自客户端 -> " << messages[socket];
 }
 
 // 通过myclient 返回数据

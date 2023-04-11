@@ -89,38 +89,13 @@
     <string>安全登录</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="username">
+  <widget class="MyLineEdit" name="password">
    <property name="geometry">
     <rect>
      <x>95</x>
-     <y>230</y>
+     <y>290</y>
      <width>240</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="editable">
-    <bool>true</bool>
-   </property>
-   <property name="currentText">
-    <string/>
-   </property>
-   <property name="currentIndex">
-    <number>-1</number>
-   </property>
-   <property name="placeholderText">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="password">
-   <property name="geometry">
-    <rect>
-     <x>95</x>
-     <y>300</y>
-     <width>240</width>
-     <height>40</height>
+     <height>50</height>
     </rect>
    </property>
    <property name="placeholderText">
@@ -166,7 +141,27 @@
     </item>
    </layout>
   </widget>
+  <widget class="MyLineEdit" name="username">
+   <property name="geometry">
+    <rect>
+     <x>95</x>
+     <y>220</y>
+     <width>240</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string/>
+   </property>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>include/mylineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../images.qrc"/>
  </resources>

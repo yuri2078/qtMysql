@@ -27,10 +27,15 @@ public:
   bool start(const QString &hostname, quint16 port, int msecs = 30000);
   void end();
   quint16 write(const QByteArray &data);
-
+  
   /* slots */
   
   void setUser(QTcpSocket *);
+
+signals:
+  void readyRead();
+
+
 
 private:
   /* signals */

@@ -27,8 +27,9 @@ bool MyClient::start(const QString &hostname, quint16 port, int msecs) {
   if (is_start) {
     // 如果能够读取就读取数据并存如last_msg
     last_error = "连接 " + hostname + ": " + QString::number(port) + " 成功!";
-    connect(this, &MyClient::readyRead, [this]() {
+    connect(this, &QTcpSocket::readyRead, [this]() {
       last_msg = this->readAll();
+      emit this->readyRead();
     });
   }
   return is_start;
