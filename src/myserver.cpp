@@ -1,6 +1,7 @@
 #include "../include/myserver.h"
 
-MyServer::MyServer(QObject *parent) : QTcpServer(parent) {
+MyServer::MyServer(QObject *parent) :
+  QTcpServer(parent) {
   last_error = "初始化";
   is_servering = false;
 }
@@ -56,10 +57,10 @@ void MyServer::end() {
 
   for (auto client : user) {
     disconnect(client, &QTcpSocket::readyRead, this, &MyServer::receiveData); // 断开连接
-    client->close(); // 关闭连接
+    client->close();                                                          // 关闭连接
   }
 
-  user.clear(); // 清空用户
+  user.clear();     // 清空用户
   messages.clear(); // 清空消息
   close();
 }
@@ -79,7 +80,7 @@ quint16 MyServer::write(MyClient *client, const QByteArray &data) {
   return 0;
 }
 
-void MyServer::insertUser(MyClient *client, QTcpSocket * socket) {
+void MyServer::insertUser(MyClient *client, QTcpSocket *socket) {
   if (user.find(client) == user.end()) {
     user[client] = socket;
   }

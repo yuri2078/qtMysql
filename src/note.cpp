@@ -6,16 +6,15 @@
 #include <qnamespace.h>
 #include <qtextcursor.h>
 
-
-Note::Note(QWidget *parent) : QTextEdit(parent) {
-
+Note::Note(QWidget *parent) :
+  QTextEdit(parent) {
   if (open(":css/note.css", QIODevice::ReadOnly | QIODevice::Text)) {
     setStyleSheet(file.readAll());
     file.close();
   }
 
   data = new QTextStream(&file);
-  
+
   isSave = true;
   file_name = "/home/yuri/yuriQt/temp/Untitled";
   open(file_name);
@@ -77,7 +76,7 @@ void Note::keyPressEvent(QKeyEvent *event) {
     event->accept(); // 标记为已经处理
   } else if (event->key() == Qt::Key_Return) {
     // 获取本行文本
-    
+
     int count_space = 0;
     for (QChar c : line_text) {
       if (c.isSpace()) {
@@ -88,9 +87,8 @@ void Note::keyPressEvent(QKeyEvent *event) {
     }
 
     if (toPlainText().count('{') > toPlainText().count('}')) {
-
       QString str = "\n" + QString(' ').repeated(count_space + 2) + "\n" + QString(' ').repeated(count_space) + "}";
-      
+
       currentCursor.insertText(str);
       currentCursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::MoveAnchor);
       currentCursor.movePosition(QTextCursor::Up, QTextCursor::MoveAnchor, 1);
@@ -108,7 +106,7 @@ void Note::keyPressEvent(QKeyEvent *event) {
     currentCursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
     event->accept();
     this->setTextCursor(currentCursor);
-  } else { 
+  } else {
     QTextEdit::keyPressEvent(event);
   }
 }

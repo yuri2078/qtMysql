@@ -49,9 +49,9 @@ bool Setting::getFromFile(const QString &file_name) {
   if (file_is_open) {
     writeJson();
   }
-  
+
   QFile file(file_name); // 打开文件
-  close(); // 先关闭，并且进行初始化
+  close();               // 先关闭，并且进行初始化
 
   // 打开文件
   file_is_open = file.open(QFile::ReadOnly | QIODevice::Text);
@@ -167,7 +167,7 @@ void Setting::writeJson() {
 
   sql_ojb.insert("hostname", mysql->host_name);
   sql_ojb.insert("port", mysql->port);
-  for(auto begin = mysql->user_info.begin();begin != mysql->user_info.end(); begin++){
+  for (auto begin = mysql->user_info.begin(); begin != mysql->user_info.end(); begin++) {
     user_obj.insert(begin.key(), begin.value());
   }
   sql_ojb.insert("user_info", user_obj);
@@ -179,7 +179,7 @@ void Setting::writeJson() {
   main_obj.insert("Login_ui", login_obj);
   main_obj.insert("Settings", set_ojb);
   main_obj.insert("MySql", sql_ojb);
-  
+
   QFile file(fileName);
   file.open(QIODevice::ReadWrite);
   QJsonDocument doc(main_obj);

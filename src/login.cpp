@@ -31,12 +31,14 @@ Login::Login(QWidget *parent)
   connect(ui->button_close, &QPushButton::clicked, [this]() { this->close(); });
 
   // 最小化按钮
-  connect(ui->button_min, &QPushButton::clicked,
-          [this]() { this->showMinimized(); });
+  connect(ui->button_min, &QPushButton::clicked, [this]() { this->showMinimized(); });
 
   // 设置账号密码默认提示
-  ui->username->setPlaceholderText("QQ号码/手机/邮箱");
-  ui->password->setPlaceholderText("密码");
+  // ui->username->setPlaceholderText("QQ号码/手机/邮箱");
+  ui->username->setEnableLabel(true);
+  ui->username->label->setText("QQ号码/手机/邮箱");
+  ui->password->setEnableLabel(true);
+  ui->password->label->setText("密码");
 
   // 退出登陆 槽函数关联
   connect(this->mainWindow, &MainWindow::loginEnd, [this]() {
@@ -44,17 +46,15 @@ Login::Login(QWidget *parent)
     mainWindow->hide();
   });
 
-  if (setting->getFromFile(
-          QCoreApplication::applicationDirPath().remove("build") +
-          "settings.json") == false) {
+  if (setting->getFromFile(QCoreApplication::applicationDirPath().remove("build") + "settings.json") == false) {
     qDebug() << "配置文件打开失败!";
   }
   login_init();
   setModal(true);
 }
 
-/* ---------------------------------- 析构函数
- * ---------------------------------- */
+/* ---------------------------------- 析构函数 ---------------------------------- */
+ 
 Login::~Login() {
   delete ui;
   delete setting;
@@ -69,22 +69,25 @@ void Login::login_init() {
   //   this->ui->username->addItem(iter.key());
   // }
 
-  /* -------------------------------  设置默认登陆密码 * ------------------------------ */
-  // this->ui->username->setText(user_info.begin().key());
-  // this->ui->password->setText(user_info.begin().value());
+  /* -------------------------------  设置默认登陆密码 ------------------------------ */
   connect(ui->button_login, &QPushButton::clicked, [=]() {
-    if (setting->getSettings()->find("nav-link").value() == false && user_info.find(ui->password->text()) == user_info.end()) {
+    if (setting->getSettings()->find("is_auto_login").value() == false && user_info.find(ui->password->text()) == user_info.end()) {
       QMessageBox::critical(this, "错误", "密码错误捏!");
-    } else {
+    } else if(setting->getSettings()->find("is_auto_login").value() || loginDataBase()) {
       login();
+    } else {
+      QMessageBox::critical(this, "错误", db.lastError().text());
     }
   });
 
   /* -------------------------------- 设置是否记住密码 -------------------------------- */
-  ui->remember_password->setChecked(
-      (*setting->getSettings())["is_remember_password"]);
+  ui->remember_password->setChecked((*setting->getSettings())["is_remember_password"]);
+  ui->auto_login->setChecked((*setting->getSettings())["is_auto_login"]);
   connect(ui->remember_password, &QCheckBox::stateChanged, [=](int state) {
     (*setting->getSettings())["is_remember_password"] = (state == Qt::Checked);
+  });
+  connect(ui->auto_login, &QCheckBox::stateChanged, [=](int state) {
+    (*setting->getSettings())["is_auto_login"] = (state == Qt::Checked);
   });
 }
 
@@ -94,7 +97,7 @@ bool Login::loginDataBase() {
   db = QSqlDatabase::addDatabase("QMYSQL");
   db.setHostName(mysql->host_name);
   db.setPort(mysql->port);
-  // db.setUserName(ui->username->lineEdit()->text());
+  db.setUserName(ui->username->text());
   db.setPassword(ui->password->text());
   return db.open();
 }
@@ -103,6 +106,7 @@ void Login::mousePressEvent(QMouseEvent *event) {
   if (event->button() == Qt::LeftButton) {
     is_move = true;
     my_pos = event->pos();
+    return;
   }
 
   QDialog::mousePressEvent(event);

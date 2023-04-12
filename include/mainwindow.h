@@ -14,6 +14,7 @@
 #include <QSqlQuery>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQueryModel>
+#include <qprocess.h>
 
 /*
 登陆成功之后的，窗口主界面
@@ -58,7 +59,7 @@ private:
   void setChangeButton();
   void setChangePage();
   void sendMessageInit();
-
+  void dataBaseInit();
   
 };
 #endif // MAINWINDOW_H

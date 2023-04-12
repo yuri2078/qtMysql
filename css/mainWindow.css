@@ -38,6 +38,9 @@
     color: rgb(109, 119, 203);
 }
 
+#compile_button:checked {
+    background-color: #FFFFFF;
+}
 
 
 #left_bg {
@@ -245,5 +248,43 @@
 
 #lineEdit {
     background-color: white;
+    border-radius: 12px;
+}
+
+/*  表格样式 */
+
+/* 表头样式 */
+#table_view  QHeaderView::section {
+    background-color: pink;
+}
+
+
+#table_view {
+    text-align: center;
+    background-color: pink;
+}
+
+#table_view::item {
+    color: black;
+    text-align: center;
+    background-color: white;
+}
+
+#table_view::item:selected {
+    background-color: pink;
+    color: white;
+}
+
+#table_view::section {
+    background-color: #00CFFF;
+    height: 30px;
+    text-align: center;
+}
+
+/* 查询按钮样式 */
+#button_search{
+    color: #0099ff;
+    border: 2px solid pink;
+    background-color: transparent;
     border-radius: 12px;
 }

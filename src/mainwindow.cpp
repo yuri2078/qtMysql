@@ -7,30 +7,33 @@
 #include <QPicture>
 #include <QtNetwork/QtNetwork>
 #include <qabstractsocket.h>
+#include <qprocess.h>
 #include <qpushbutton.h>
 #include <qtcpserver.h>
 #include <qtcpsocket.h>
+#include <QSqlRecord>
+#include <QStandardItemModel>
+#include <QProcess>
 
 // 打印日志宏
-#define info_label_log(str)                                                    \
-  ui->info_label->insertPlainText(                                             \
-      QDateTime::currentDateTime().toString("hh:mm:ss  ") + str + "\n");
+#define info_label_log(str)        \
+  ui->info_label->insertPlainText( \
+    QDateTime::currentDateTime().toString("hh:mm:ss  ") + str + "\n");
 
-MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
-    : QMainWindow(parent), ui(new Ui::MainWindow), db(db),
-      server(new MyServer(this)), client(new MyClient(this)) {
+MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db) :
+  QMainWindow(parent), ui(new Ui::MainWindow), db(db),
+  server(new MyServer(this)), client(new MyClient(this)) {
   ui->setupUi(this);
   setWindowIcon(QIcon(":/images/login/icon.png"));
 
   ui->stackedWidget->setCurrentIndex(0); // 设置初始界面是 主页
 
-  QFile file(":css/mainWindow.css",this);
+  QFile file(":css/mainWindow.css", this);
   file.open(QFile::ReadOnly | QFile::Text);
   setStyleSheet(file.readAll());
   file.close();
 
-
-  // 推出登陆信号
+  // 发出登陆信号
   connect(ui->logout_button, &QPushButton::clicked, [this]() {
     emit loginEnd();
   });
@@ -38,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
   // 搜索信号
   connect(ui->search_button, &QPushButton::clicked, [this]() {
     QDesktopServices::openUrl(QUrl("https://www.bing.com/search?q=" + ui->search_edit->text()));
-    
   });
 
   init(); // 固定初始化
@@ -47,10 +49,38 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db)
   connect(ui->open_file, &QAction::triggered, ui->main_edit, &Note::openFile);
   connect(ui->save_file, &QAction::triggered, ui->main_edit, &Note::saveFile);
   connect(ui->main_edit, &Note::textChanged, [=]() {
-    QString sava = ui->main_edit->isSave ? "" : " *"; 
+    QString sava = ui->main_edit->isSave ? "" : " *";
     ui->file_name->setText(ui->main_edit->file_name + sava);
   });
 
+  ui->compile_button->setCheckable(false);
+  connect(ui->compile_button, &QPushButton::clicked, [this]() {
+    QProcess process;
+    process.setProgram("/usr/bin/bash");
+
+    QStringList arguments;
+    arguments << "-o" << "/home/yuri/yuri/c++/test.out" << "/home/yuri/yuri/c++/test.cpp";
+
+    process.start("clang++", arguments);
+
+    if (!process.waitForStarted()) {
+        qDebug() << "Failed to start process!";
+        return;
+    }
+
+    if (!process.waitForFinished()) {
+        qDebug() << "Failed to finish process!";
+        return;
+    }
+
+    QByteArray output = process.readAllStandardOutput();
+    QByteArray error = process.readAllStandardError();
+
+    if (!error.isEmpty()) {
+        // 如果在编译过程中有错误，输出错误信息到控制台
+        QMessageBox::critical(this, "编译错误",error);
+    }
+  });
 }
 
 MainWindow::~MainWindow() {
@@ -65,28 +95,26 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 // 初始化操作
 bool MainWindow::init() {
-  setIcons(); // 设置各种图标
+  setIcons();        // 设置各种图标
   setChangeButton(); // 设置切换按钮特效
-  setChangePage(); // 设置切换界面
+  setChangePage();   // 设置切换界面
   sendMessageInit(); // 客户端发送消息初始化
-
+  dataBaseInit();    // 数据库读写初始化
   return false;
 }
 
-
 void MainWindow::setIcons() {
-
   // 设置一些图片 根据label 控件显示
   QPixmap pixmap;
   pixmap.load(":/images/logo.png");
   ui->logo->setPixmap(pixmap.scaled(ui->logo->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-  
+
   pixmap.load(":/images/avatar.png");
   ui->avatar_label->setPixmap(pixmap.scaled(ui->avatar_label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
   pixmap.load(":/images/icons/notification.png");
   ui->notification_label->setPixmap(
-  pixmap.scaled(ui->notification_label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    pixmap.scaled(ui->notification_label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
   pixmap.load(":/images/icons/github.png");
   ui->label_1->setPixmap(pixmap.scaled(ui->label_1->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -113,6 +141,7 @@ void MainWindow::setIcons() {
   ui->adv_button->setIcon(QIcon(":/images/icons/转账.png"));
   ui->table_to_sql_button->setIcon(QIcon(":/images/icons/合作.png"));
   ui->attachment_button->setIcon(QIcon(":/images/icons/attachment.png"));
+  ui->compile_button->setIcon(QIcon(":/images/icons/attachment.png"));
   ui->button_1->setIcon(QIcon(":/images/icons/attachment.png"));
   ui->button_2->setIcon(QIcon(":/images/icons/attachment.png"));
   ui->button_3->setIcon(QIcon(":/images/icons/attachment.png"));
@@ -158,10 +187,8 @@ void MainWindow::setChangeButton() {
   });
 }
 
-
 // 设置根据按钮切换到不同的界面
 void MainWindow::setChangePage() {
-  
   connect(ui->home_button, &QPushButton::clicked, [this]() {
     ui->stackedWidget->setCurrentIndex(0); // 主页
   });
@@ -188,7 +215,7 @@ void MainWindow::sendMessageInit() {
     if (client->is_start) {
       client->end(); // 调用end 结束连接
       info_label_log("客户端已经关闭!")
-      ui->connect_client->setChecked(false); // 设置按钮为未连接状态
+        ui->connect_client->setChecked(false); // 设置按钮为未连接状态
     } else {
       client->start("127.0.0.1", 2078);
       ui->connect_client->setChecked(client->is_start);
@@ -210,7 +237,6 @@ void MainWindow::sendMessageInit() {
       info_label_log(server->last_error);
     }
   });
-
 
   // 两个发送消息框定义， 他们都重写回车按钮，按下回车机会发送消息
   auto send_client = new MyLineEdit(ui->frame);
@@ -234,7 +260,7 @@ void MainWindow::sendMessageInit() {
     if (server->write(client, send_server->text().toUtf8()) == 0) {
       info_label_log(server->last_error)
     }
-     send_server->setText("");
+    send_server->setText("");
   });
 
   // 打印接受到消息
@@ -253,45 +279,27 @@ void MainWindow::sendMessageInit() {
   connect(server, &MyServer::newUser, client, &MyClient::setUser);
 }
 
-//    connect(ui->open_file, &QAction::triggered, this,
-//    &MainWindow::openFile);
-//
-//    connect(ui->kurseni_file, &QAction::triggered, this,
-//    &MainWindow::saveFile);
-//
-//    connect(ui->go_back,&QAction::triggered, [this]() {
-//        emit this->loginEnd();
-//    });
-//
-//    connect(this->ui->search_data, &QAction::triggered,[this](){
-//        this->ui->stackedWidget->show();
-//        this->ui->stackedWidget->setCurrentIndex(1);
-//    });
-//
-//    this->ui->table_view->hide();
-//    this->ui->stackedWidget->close();
-//
-//    connect(ui->button_search, &QPushButton::clicked, [this](){
-//        if(this->db->open()) {
-//            this->db->setDatabaseName("miku");
-//            QSqlQuery query;
-//            if(!query.exec(this->ui->edit_search->text())) {
-//                // 数据库查询失败，弹出错误提示框
-//                QMessageBox::critical(this, "错误", "查询数据库时发生错误："
-//                + query.lastError().text());
-//            } else {
-//                model.setQuery(this->ui->edit_search->text());
-//                // 将查询结果显示在TableView控件中
-//                ui->table_view->setModel(&model);
-//                this->ui->table_view->show();
-//            }
-//
-//        }else{
-//            qDebug() << "打开失败!";
-//        }
-//    });
-//
-//    connect(ui->create_file,&QAction::triggered,[this](){
-//        this->ui->stackedWidget->show();
-//        this->ui->stackedWidget->setCurrentIndex(0);
-//    });
+void MainWindow::dataBaseInit() {
+  ui->edit_search->setEnableLabel(true);
+  ui->edit_search->label->setText("请输入MySql 查询语句");
+  connect(ui->button_search, &QPushButton::clicked, [this]() {
+    if (this->db->open()) {
+      this->db->setDatabaseName("miku");
+      QSqlQuery query;
+      if (!query.exec(this->ui->edit_search->text())) {
+        // 数据库查询失败，弹出错误提示框
+        QMessageBox::critical(this, "错误", "查询数据库时发生错误：" + query.lastError().text());
+      } else {
+        model.setQuery(this->ui->edit_search->text());
+        // 将查询结果显示在TableView控件中
+        ui->table_view->setModel(&model);
+        this->ui->table_view->show();
+        ui->table_view->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); // 平分列宽
+        ui->table_view->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);   // 平分行高
+      }
+
+    } else {
+      qDebug() << "打开失败!";
+    }
+  });
+}

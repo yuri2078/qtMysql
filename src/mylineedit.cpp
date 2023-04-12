@@ -3,20 +3,17 @@
 #include <QKeyEvent>
 #include <QPropertyAnimation>
 
-MyLineEdit::MyLineEdit(QWidget *parent)
-    : QLineEdit(parent), label(new QLabel(this)), machine(new QStateMachine()),
-      fous_in(new QState), fous_out(new QState) {
-
+MyLineEdit::MyLineEdit(QWidget *parent) :
+  QLineEdit(parent), label(new QLabel(this)), machine(new QStateMachine()),
+  fous_in(new QState), fous_out(new QState) {
   machine->addState(fous_in);
   machine->addState(fous_out);
-  machine->setInitialState(fous_out); // 设置初始状态为 失去焦点
-  setEnableLabel(false);
+  machine->setInitialState(fous_out);
 
   auto transition = new QEventTransition(this, QEvent::FocusIn);
-  transition->setTargetState(fous_in); // 设置目标状态
+  transition->setTargetState(fous_in);
   fous_out->addTransition(transition);
 
-  // 新建动画
   auto animal = new QPropertyAnimation(label, "pos");
   animal->setDuration(700);
   animal->setEasingCurve(QEasingCurve::OutCubic);
@@ -29,23 +26,18 @@ MyLineEdit::MyLineEdit(QWidget *parent)
   animal->setDuration(700);
   animal->setEasingCurve(QEasingCurve::OutCubic);
   transition->addAnimation(animal);
+  setEnableLabel(false);
 
-  fous_out->assignProperty(label, "pos",
-                           QPointF(0, QFontMetrics(label->font()).height()));
-  fous_in->assignProperty(label, "pos", QPointF(0, -5));
-
+  setDefaultStyle();
   machine->start();
 
   connect(this, &MyLineEdit::textChanged, [this]() {
     if (text().isEmpty()) {
-      fous_out->assignProperty(
-          label, "pos", QPointF(0, QFontMetrics(label->font()).height()));
+      fous_out->assignProperty(label, "pos", QPointF(0, QFontMetrics(label->font()).height() / 2.0 - 2));
     } else {
-      fous_out->assignProperty(label, "pos", QPointF(0, -5));
+      fous_out->assignProperty(label, "pos", QPointF(0, -QFontMetrics(label->font()).height() * 0.6));
     }
   });
-
-  setDefaultStyle();
 }
 
 void MyLineEdit::setEnableLabel(bool has_label) {
@@ -53,12 +45,16 @@ void MyLineEdit::setEnableLabel(bool has_label) {
   if (has_label) {
     setContentsMargins(0, QFontMetrics(label->font()).height(), 0, 0);
     label->setFixedSize(width(), height());
+    QFont font = label->font();
+    label->setFont(QFont("Fira Code Medium", height() / 4));
     label->show();
   } else {
     label->hide();
     setContentsMargins(0, 0, 0, 0);
     label->setFixedSize(width(), height());
   }
+  fous_out->assignProperty(label, "pos", QPointF(0, QFontMetrics(label->font()).height() / 2.0 - 2));
+  fous_in->assignProperty(label, "pos", QPointF(0, -QFontMetrics(label->font()).height() * 0.6));
 }
 
 void MyLineEdit::focusOutEvent(QFocusEvent *event) {
@@ -84,9 +80,7 @@ void MyLineEdit::setDefaultStyle() {
         border-bottom: 2px solid #5EBD3E;\
     }");
   // label->setFixedSize(width(), height());
-  QFont font = label->font();
-  label->setFont(QFont("Fira Code Medium", height() / 2.3));
-  label->setStyleSheet("background-color: transparent; color: black;border:none;");
+  label->setStyleSheet("background-color: transparent; color: gray;border:none;");
 }
 
 void MyLineEdit::keyPressEvent(QKeyEvent *event) {
