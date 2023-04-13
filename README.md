@@ -4,38 +4,21 @@
 >
 > 本项目 基于 `Qt6` 进行开发
 
-## 目录结构
-
-```ABAP
-├── CMakeLists.txt
-├── README.md
-├── images
-├── images.qrc
-├── include
-│   ├── login.h -- 登陆
-│   ├── mainwindow.h -- 登陆后主界面
-│   ├── myclient.h -- MyTcpSocket
-│   ├── mylineedit.h -- MyLineEdit
-│   ├── myserver.h -- MyTcpServer
-│   └── setting.h
-├── main.cpp -- main.cpp
-├── mainWindow.css
-├── settings.json -- 配置文件
-├── src
-│   ├── login.cpp
-│   ├── mainwindow.cpp
-│   ├── myclient.cpp
-│   ├── mylineedit.cpp
-│   ├── myserver.cpp
-│   └── setting.cpp
-├── ui
-│   ├── login.ui -- 登陆界面
-│   └── mainwindow.ui -- 登陆成功主界面
-```
-
-
-
 ## 实现功能
 
 1. MySQL 数据库登陆
 2. c/s 通信测试
+3. mysql 数据查询
+4. 便签功能
+
+## 软件截图
+
+![](docs/images/Screenshot_20230413_222625.png)
+
+![](docs/images/Screenshot_20230413_222638.png)
+
+![](docs/images/Screenshot_20230413_222721.png)
+
+![](docs/images/Screenshot_20230413_222825.png)
+
+![](docs/images/Screenshot_20230413_222849.png)

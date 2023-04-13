@@ -1,10 +1,6 @@
 #include "../include/note.h"
 #include <QFileDialog>
-#include <QKeyEvent>
 #include <QTextBlock>
-#include <QTextStream>
-#include <qnamespace.h>
-#include <qtextcursor.h>
 
 Note::Note(QWidget *parent) :
   QTextEdit(parent) {
@@ -17,14 +13,13 @@ Note::Note(QWidget *parent) :
 
   isSave = true;
   file_name = "/home/yuri/yuriQt/temp/Untitled";
-  open(file_name);
 }
 
 Note::~Note() {
-  isSave = true;
-  file.close();
+  // saveFile(false);
 }
 
+// 打开一个文件,默认以文本 可读可写状态打开
 bool Note::open(const QString &file_name, QIODeviceBase::OpenMode flag) {
   file.setFileName(file_name);
   if (file.open(flag)) {
@@ -37,33 +32,35 @@ bool Note::open(const QString &file_name, QIODeviceBase::OpenMode flag) {
   }
 }
 
-// 打开一个文件对话框并保存文件
-void Note::saveFile() {
-  QString file_name = QFileDialog::getSaveFileName(this, "请选择保存的位置", "/home/yuri/yuriQt/temp", "");
+// 打开一个文件对话框并保存文件,将以保存设置为true
+void Note::saveFile(bool new_file) {
+  // 如果是新文件就打开新的对话框,不是就直接保存
+  if (new_file) {
+    file_name = QFileDialog::getSaveFileName(this, "请选择保存的位置", "/home/yuri/yuriQt/temp", "");
+  }
   if (open(file_name, QFile::WriteOnly | QFile::Truncate)) {
     emit Note::textChanged();
     *data << toPlainText();
+    isSave = true;
     file.close();
   }
 }
 
 // 打开一个文件对话框并打开文件
 void Note::openFile() {
-  QString file_name = QFileDialog::getOpenFileName(this, "请选择打开的位置", "/home/yuri/yuriQt/temp", "");
+  file_name = QFileDialog::getOpenFileName(this, "请选择打开的位置", "/home/yuri/yuriQt/temp", "");
   emit Note::textChanged();
-  open(file_name);
-  setPlainText(data->readAll());
+  if (open(file_name, QFile::ReadOnly | QFile::Truncate)) {
+    setPlainText(data->readAll());
+  }
 }
 
-// 重写键盘事件
+// 重写键盘事件 实现检点的符号补全
 void Note::keyPressEvent(QKeyEvent *event) {
   isSave = false;
   if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_S) {
-    isSave = true;
-    open(file_name, QFile::WriteOnly | QFile::Truncate);
-    *data << toPlainText();
+    saveFile(file_name == "/home/yuri/yuriQt/temp/Untitled");
     file.close();
-    emit textChanged();
     event->accept();
     return;
   }

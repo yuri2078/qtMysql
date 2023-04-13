@@ -6,17 +6,21 @@
 MyLineEdit::MyLineEdit(QWidget *parent) :
   QLineEdit(parent), label(new QLabel(this)), machine(new QStateMachine()),
   fous_in(new QState), fous_out(new QState) {
+  // 添加状态并设置初始状态为失去焦点
   machine->addState(fous_in);
   machine->addState(fous_out);
   machine->setInitialState(fous_out);
 
+  // 添加状态转移
   auto transition = new QEventTransition(this, QEvent::FocusIn);
+  // 设置目标状态
   transition->setTargetState(fous_in);
   fous_out->addTransition(transition);
 
+  // 添加动画
   auto animal = new QPropertyAnimation(label, "pos");
-  animal->setDuration(700);
-  animal->setEasingCurve(QEasingCurve::OutCubic);
+  animal->setDuration(700); // 持续时间
+  animal->setEasingCurve(QEasingCurve::OutCubic); // 动画曲线
   transition->addAnimation(animal);
 
   transition = new QEventTransition(this, QEvent::FocusOut);
@@ -29,8 +33,9 @@ MyLineEdit::MyLineEdit(QWidget *parent) :
   setEnableLabel(false);
 
   setDefaultStyle();
-  machine->start();
+  machine->start(); // 开启状态机
 
+  // 关联字体更改,更改是否移动标签
   connect(this, &MyLineEdit::textChanged, [this]() {
     if (text().isEmpty()) {
       fous_out->assignProperty(label, "pos", QPointF(0, QFontMetrics(label->font()).height() / 2.0 - 2));
@@ -40,6 +45,7 @@ MyLineEdit::MyLineEdit(QWidget *parent) :
   });
 }
 
+// 设置是否含有标签
 void MyLineEdit::setEnableLabel(bool has_label) {
   this->has_label = has_label;
   if (has_label) {
@@ -65,6 +71,7 @@ void MyLineEdit::focusInEvent(QFocusEvent *event) {
   QLineEdit::focusInEvent(event);
 }
 
+// 设置默认样式
 void MyLineEdit::setDefaultStyle() {
   setStyleSheet("MyLineEdit { \
         border: none;\
@@ -83,6 +90,7 @@ void MyLineEdit::setDefaultStyle() {
   label->setStyleSheet("background-color: transparent; color: gray;border:none;");
 }
 
+// 重写回车,发送sendmessage 信号
 void MyLineEdit::keyPressEvent(QKeyEvent *event) {
   if (event->key() == Qt::Key_Return && !text().isEmpty()) {
     emit sendMessage();

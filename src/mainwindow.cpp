@@ -53,34 +53,6 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db) :
     ui->file_name->setText(ui->main_edit->file_name + sava);
   });
 
-  ui->compile_button->setCheckable(false);
-  connect(ui->compile_button, &QPushButton::clicked, [this]() {
-    QProcess process;
-    process.setProgram("/usr/bin/bash");
-
-    QStringList arguments;
-    arguments << "-o" << "/home/yuri/yuri/c++/test.out" << "/home/yuri/yuri/c++/test.cpp";
-
-    process.start("clang++", arguments);
-
-    if (!process.waitForStarted()) {
-        qDebug() << "Failed to start process!";
-        return;
-    }
-
-    if (!process.waitForFinished()) {
-        qDebug() << "Failed to finish process!";
-        return;
-    }
-
-    QByteArray output = process.readAllStandardOutput();
-    QByteArray error = process.readAllStandardError();
-
-    if (!error.isEmpty()) {
-        // 如果在编译过程中有错误，输出错误信息到控制台
-        QMessageBox::critical(this, "编译错误",error);
-    }
-  });
 }
 
 MainWindow::~MainWindow() {
@@ -141,7 +113,6 @@ void MainWindow::setIcons() {
   ui->adv_button->setIcon(QIcon(":/images/icons/转账.png"));
   ui->table_to_sql_button->setIcon(QIcon(":/images/icons/合作.png"));
   ui->attachment_button->setIcon(QIcon(":/images/icons/attachment.png"));
-  ui->compile_button->setIcon(QIcon(":/images/icons/attachment.png"));
   ui->button_1->setIcon(QIcon(":/images/icons/attachment.png"));
   ui->button_2->setIcon(QIcon(":/images/icons/attachment.png"));
   ui->button_3->setIcon(QIcon(":/images/icons/attachment.png"));

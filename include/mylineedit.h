@@ -6,6 +6,8 @@
 #include <QStateMachine>
 #include <qtmetamacros.h>
 
+// 自定义单行注释类,默认不带标签,需要设置显示标签并设置标签字体才会显示
+
 class MyLineEdit : public QLineEdit {
 
     Q_OBJECT

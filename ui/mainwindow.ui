@@ -245,43 +245,6 @@
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="compile_button">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>570</y>
-        <width>320</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="focusPolicy">
-       <enum>Qt::StrongFocus</enum>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#home_button::icon {
-    margin-right: 27px;
-}
-
-#compile_button:clecked {
-background-color: #FFFFFF;
-}</string>
-      </property>
-      <property name="text">
-       <string>  编译文件</string>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
-      </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-     </widget>
     </widget>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="geometry">
