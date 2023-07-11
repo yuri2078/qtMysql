@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QMovie>
+#include <qsqlerror.h>
 
 Login::Login(QWidget *parent)
     : QDialog(parent), ui(new Ui::login), mainWindow(new MainWindow(this, &db)),
@@ -71,9 +72,7 @@ void Login::login_init() {
 
   /* -------------------------------  设置默认登陆密码 ------------------------------ */
   connect(ui->button_login, &QPushButton::clicked, [=]() {
-    if (setting->getSettings()->find("is_auto_login").value() == false && user_info.find(ui->password->text()) == user_info.end()) {
-      QMessageBox::critical(this, "错误", "密码错误捏!");
-    } else if(setting->getSettings()->find("is_auto_login").value() || loginDataBase()) {
+    if(setting->getSettings()->find("is_auto_login").value() || loginDataBase()) {
       login();
     } else {
       QMessageBox::critical(this, "错误", db.lastError().text());
@@ -94,7 +93,6 @@ void Login::login_init() {
 // 登陆数据库，返回是否登陆成功
 bool Login::loginDataBase() {
   auto mysql = this->setting->getMysql();
-  db = QSqlDatabase::addDatabase("QMYSQL");
   db.setHostName(mysql->host_name);
   db.setPort(mysql->port);
   db.setUserName(ui->username->text());

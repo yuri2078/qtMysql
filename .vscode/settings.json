@@ -39,7 +39,7 @@
     "editor.codeLensFontFamily": "Fira Code Medium",
     // "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font ", // 终端字体
     "terminal.integrated.fontFamily": "Fira Code Medium", // 终端字体
-    "editor.fontSize": 19, // 编辑器文字大小
+    "editor.fontSize": 26, // 编辑器文字大小
     "terminal.integrated.fontSize": 15, // 集成终端字体大小
     "editor.semanticHighlighting.enabled": true,
     "clangd.arguments": [

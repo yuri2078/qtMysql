@@ -8,7 +8,7 @@
 #include "./mainwindow.h"
 #include "./setting.h"
 #include <QDialog>
-#include <QSqlDatabase>
+#include "./qmysql.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -31,7 +31,7 @@ private:
   Ui::login *ui;
   MainWindow *mainWindow; // 主窗口指针
   Setting *setting;       // 配置文件指针
-  QSqlDatabase db;        // 数据库文件
+  QMysql db;        // 数据库文件
 
   void login_init();    // 登陆初始化
   bool loginDataBase(); // 登陆数据库

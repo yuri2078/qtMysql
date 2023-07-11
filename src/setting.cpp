@@ -83,7 +83,7 @@ Setting::Mysql *Setting::getMysql() {
   mysql = new Mysql;
   QVariantMap mysql_map = json->value("MySql").toMap();
   mysql->port = mysql_map["port"].toInt();
-  mysql->host_name = mysql_map["host_name"].toString();
+  mysql->host_name = mysql_map["hostname"].toString();
 
   auto user_info = mysql_map["user_info"].toMap();
   for (auto iter = user_info.begin(); iter != user_info.end(); iter++) {

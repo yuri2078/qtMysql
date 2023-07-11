@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 project(yuri VERSION 0.1 LANGUAGES CXX)
 
@@ -26,6 +26,7 @@ INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}
 )
 
+add_subdirectory(lib/system_login)
 
 set(PROJECT_SOURCES
     main.cpp
@@ -33,11 +34,11 @@ set(PROJECT_SOURCES
     include/setting.h
     include/mainwindow.h
     include/login.h
-    
     include/myclient.h
     include/mylineedit.h
     include/myserver.h
     include/note.h
+    include/qmysql.h
 
     src/login.cpp
     src/mainwindow.cpp  
@@ -46,6 +47,7 @@ set(PROJECT_SOURCES
     src/setting.cpp
     src/mylineedit.cpp
     src/note.cpp
+    src/qmysql.cpp
 
     ui/login.ui
     ui/mainwindow.ui
@@ -85,6 +87,7 @@ target_link_libraries(yuri PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(yuri PRIVATE Qt6::Sql)
 target_link_libraries(yuri PRIVATE Qt6::Network)
 target_link_libraries(yuri PRIVATE Qt6::StateMachine)
+target_link_libraries(yuri PRIVATE my_dialog)
 
 set_target_properties(yuri PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

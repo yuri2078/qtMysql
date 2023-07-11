@@ -21,7 +21,7 @@ bool MyClient::start(const QString &hostname, quint16 port, int msecs) {
   if (is_start) {
     disconnectFromHost(); // 如果之前连接了，就先断开连接
   }
-
+  
   connectToHost(hostname, port); // 连接host
   is_start = waitForConnected(msecs);
   if (is_start) {

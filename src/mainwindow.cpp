@@ -20,9 +20,9 @@
   ui->info_label->insertPlainText( \
     QDateTime::currentDateTime().toString("hh:mm:ss  ") + str + "\n");
 
-MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db) :
+MainWindow::MainWindow(QWidget *parent, QMysql *db) :
   QMainWindow(parent), ui(new Ui::MainWindow), db(db),
-  server(new MyServer(this)), client(new MyClient(this)) {
+  server(new MyServer(this)), client(new MyClient(this)), student_system(nullptr) {
   ui->setupUi(this);
   setWindowIcon(QIcon(":/images/login/icon.png"));
 
@@ -52,7 +52,6 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase *db) :
     QString sava = ui->main_edit->isSave ? "" : " *";
     ui->file_name->setText(ui->main_edit->file_name + sava);
   });
-
 }
 
 MainWindow::~MainWindow() {
@@ -72,6 +71,7 @@ bool MainWindow::init() {
   setChangePage();   // 设置切换界面
   sendMessageInit(); // 客户端发送消息初始化
   dataBaseInit();    // 数据库读写初始化
+
   return false;
 }
 
@@ -169,11 +169,26 @@ void MainWindow::setChangePage() {
   });
 
   connect(ui->mysql_button, &QPushButton::clicked, [this]() {
-    ui->stackedWidget->setCurrentIndex(2); // mysql 测试
+    ui->stackedWidget->setCurrentIndex(2); // mysql
   });
 
   connect(ui->adv_button, &QPushButton::clicked, [this]() {
-    ui->stackedWidget->setCurrentIndex(3); // c/s 测试
+    ui->stackedWidget->setCurrentIndex(3); // c/s
+  });
+
+  connect(ui->table_to_sql_button, &QPushButton::clicked, [this]() {
+    ui->stackedWidget->setCurrentIndex(4); // 学生管理
+    if (student_system == nullptr) {
+      student_system = new StudentSystemLogin(ui->page_5);
+      connect(student_system, &StudentSystemLogin::readyLogin, [this](const QString username, const QString password) {
+        QSqlQuery query = this->db->exec("select * from student_system.user");
+        while (query.next()) {
+          qDebug() << query.value("username");
+          qDebug() << query.value("password");
+        }
+      });
+    }
+    student_system->show();
   });
 }
 
@@ -255,20 +270,13 @@ void MainWindow::dataBaseInit() {
   ui->edit_search->label->setText("请输入MySql 查询语句");
   connect(ui->button_search, &QPushButton::clicked, [this]() {
     if (this->db->open()) {
-      this->db->setDatabaseName("miku");
-      QSqlQuery query;
-      if (!query.exec(this->ui->edit_search->text())) {
-        // 数据库查询失败，弹出错误提示框
-        QMessageBox::critical(this, "错误", "查询数据库时发生错误：" + query.lastError().text());
-      } else {
-        model.setQuery(this->ui->edit_search->text());
-        // 将查询结果显示在TableView控件中
-        ui->table_view->setModel(&model);
-        this->ui->table_view->show();
-        ui->table_view->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); // 平分列宽
-        ui->table_view->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);   // 平分行高
-      }
-
+      db->exec("use db_student;");
+      model.setQuery(db->exec(ui->edit_search->text()));
+      // 将查询结果显示在TableView控件中
+      ui->table_view->setModel(&model);
+      this->ui->table_view->show();
+      ui->table_view->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); // 平分列宽
+      ui->table_view->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);   // 平分行高
     } else {
       qDebug() << "打开失败!";
     }
