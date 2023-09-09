@@ -6,4 +6,9 @@
 cmake-build-debug/
 *build/
 build*/
-.cache
+.cache/
+.ccls-cache
+.idea/
+devel/
+*.so
+*.exe
