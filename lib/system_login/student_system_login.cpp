@@ -15,7 +15,7 @@ StudentSystemLogin::~StudentSystemLogin() {
 }
 
 void StudentSystemLogin::init() {
-  QFile file(":css/login.css");
+  QFile file(":css/system_login.css");
   file.open(QFile::ReadOnly);
   setStyleSheet(file.readAll());
   file.close();

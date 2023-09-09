@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>login.css</file>
+        <file>css/system_login.css</file>
     </qresource>
 </RCC>
